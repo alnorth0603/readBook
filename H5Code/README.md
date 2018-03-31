@@ -1,6 +1,6 @@
-# readbook
+# wechatreabook
 
-> 读书管理
+> 微信端在线读书管理
 
 ## Build Setup
 
