@@ -5,29 +5,29 @@
     <div class="grid">
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
         <grid-item link="/component/cell">
-          <img slot="icon" src="../assets/home/icon_grid_1.png">
+          <img slot="icon" src="../assets/home/icon_start_recorder.png">
           <span slot="label">开始记录</span>
         </grid-item>
         <grid-item :link="{ path: '/component/cell'}">
-          <img slot="icon" src="../assets/home/icon_grid_2.png">
+          <img slot="icon" src="../assets/home/icon_good_books.png">
           <span slot="label">好书严选</span>
         </grid-item>
         <grid-item link="/component/cell">
-          <img slot="icon" src="../assets/home/icon_grid_3.png">
+          <img slot="icon" src="../assets/home/icon_book_test.png">
           <span slot="label">书籍测试</span>
         </grid-item>
       </grid>
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
         <grid-item link="/component/cell">
-          <img slot="icon" src="../assets/home/icon_grid_4.png">
+          <img slot="icon" src="../assets/home/icon_good_books.png">
           <span slot="label">绑定学生</span>
         </grid-item>
         <grid-item :link="{ path: '/component/cell'}">
-          <img slot="icon" src="../assets/home/icon_grid_5.png">
+          <img slot="icon" src="../assets/home/icon_busine_cooperate.png">
           <span slot="label">商务合作</span>
         </grid-item>
         <grid-item link="/component/cell">
-          <img slot="icon" src="../assets/home/icon_grid_6.png">
+          <img slot="icon" src="../assets/home/icon_about_us.png">
           <span slot="label">关于我们</span>
         </grid-item>
       </grid>
