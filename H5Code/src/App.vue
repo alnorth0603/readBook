@@ -19,7 +19,7 @@
           <img slot="icon-active" src="./assets/tabbar/icon_books_red.png">
           <span slot="label">阅读记录</span>
         </tabbar-item>
-        <tabbar-item link="/component/demo">
+        <tabbar-item link="/setting">
           <img slot="icon" src="./assets/tabbar/icon_setting.png">
           <img slot="icon-active" src="./assets/tabbar/icon_setting_red.png">
           <span slot="label">设置</span>
