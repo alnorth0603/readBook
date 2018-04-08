@@ -18,7 +18,7 @@
         </grid-item>
       </grid>
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/component/cell">
+        <grid-item link="/bindstudent">
           <img slot="icon" src="../assets/home/icon_good_books.png">
           <span slot="label">绑定学生</span>
         </grid-item>

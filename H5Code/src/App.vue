@@ -2,7 +2,7 @@
  <div id="app" style="height:100%;">
     <view-box ref="viewBox">
       <x-header slot="header" :left-options="{showBack: false}" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
-        <span class="color_1">创</span><span class="color_2">闻</span><span class="color_3">阅</span><span class="color_4">读</span>
+        <span class="color_1">乐</span><span class="color_2">在</span><span class="color_4">读</span>
         <x-icon slot="right" type="navicon" size="35" style="fill:#F83E91;position:relative;top:-8px;left:-3px;"></x-icon>
       </x-header>
       <transition>
@@ -19,7 +19,7 @@
           <img slot="icon-active" src="./assets/tabbar/icon_books_red.png">
           <span slot="label">阅读记录</span>
         </tabbar-item>
-        <tabbar-item link="/component/demo">
+        <tabbar-item>
           <img slot="icon" src="./assets/tabbar/icon_setting.png">
           <img slot="icon-active" src="./assets/tabbar/icon_setting_red.png">
           <span slot="label">设置</span>
