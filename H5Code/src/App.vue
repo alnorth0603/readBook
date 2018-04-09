@@ -9,7 +9,7 @@
         <router-view class="router-view main"></router-view>
       </transition>
       <tabbar slot="bottom">
-        <tabbar-item selected>
+        <tabbar-item selected   :link="{path:'/'}">
           <img slot="icon" src="./assets/tabbar/icon_home.png">
           <img slot="icon-active" src="./assets/tabbar/icon_home_red.png">
           <span slot="label">主页</span>
@@ -19,7 +19,7 @@
           <img slot="icon-active" src="./assets/tabbar/icon_books_red.png">
           <span slot="label">阅读记录</span>
         </tabbar-item>
-        <tabbar-item link="/setting">
+        <tabbar-item :link="{path:'/setting'}">
           <img slot="icon" src="./assets/tabbar/icon_setting.png">
           <img slot="icon-active" src="./assets/tabbar/icon_setting_red.png">
           <span slot="label">设置</span>
@@ -48,7 +48,6 @@ export default {
 <style lang="less">
 @import "~vux/src/styles/reset.less";
 @import '~vux/src/styles/1px.less';
-@import '~vux/src/styles/tap.less';
   html, body {
     height: 100%;
     width: 100%;
@@ -98,5 +97,8 @@ export default {
   }
   .main{
     margin: 47px 0 10px;
+  }
+  .weui-tab__panel{
+    background: #F6F6F6;
   }
 </style>
