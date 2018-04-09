@@ -9,15 +9,15 @@
         <router-view class="router-view main"></router-view>
       </transition>
       <tabbar slot="bottom">
-        <tabbar-item selected   :link="{path:'/'}">
+        <tabbar-item selected :link="{path:'/'}">
           <img slot="icon" src="./assets/tabbar/icon_home.png">
           <img slot="icon-active" src="./assets/tabbar/icon_home_red.png">
           <span slot="label">主页</span>
         </tabbar-item>
-        <tabbar-item>
+        <tabbar-item :link="{path:'/browse/home'}">
           <img slot="icon" src="./assets/tabbar/icon_books.png">
           <img slot="icon-active" src="./assets/tabbar/icon_books_red.png">
-          <span slot="label">阅读记录</span>
+          <span slot="label">翻阅记录</span>
         </tabbar-item>
         <tabbar-item :link="{path:'/setting'}">
           <img slot="icon" src="./assets/tabbar/icon_setting.png">

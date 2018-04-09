@@ -76,7 +76,6 @@
   </div>
 </template>
 <script>
-// import { GroupTitle, Group, Cell, XInput, Selector, PopupPicker, Datetime, XNumber, XAddress, XTextarea, XSwitch, Flexbox, FlexboxItem } from 'vux'
 import { XInput, PopupPicker, Flexbox, FlexboxItem, Cell } from 'vux'
 export default {
   components: {

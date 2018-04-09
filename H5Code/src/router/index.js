@@ -26,6 +26,16 @@ const router = new VueRouter({
       path: '/setting',
       name: 'setting',
       component: resolve => require(['@/components/setting'], resolve)
+    },
+    {
+      path: '/browse/home',
+      name: 'browse',
+      component: resolve => require(['@/components/browse/home'], resolve)
+    },
+    {
+      path: '/analyse',
+      name: 'analyse',
+      component: resolve => require(['@/components/analyse'], resolve)
     }
     // {
     //   path: '/init',

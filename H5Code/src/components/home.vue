@@ -19,7 +19,7 @@
       </grid>
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
         <grid-item link="/bindstudent">
-          <img slot="icon" src="../assets/home/icon_good_books.png">
+          <img slot="icon" src="../assets/home/icon_bound_student.png">
           <span slot="label">绑定学生</span>
         </grid-item>
         <grid-item :link="{ path: '/component/cell'}">
@@ -63,13 +63,10 @@
 </template>
 
 <script>
-import { Panel, Group, Cell, Flexbox, FlexboxItem, Grid, GridItem, Swiper, SwiperItem, Divider } from 'vux'
+import { Flexbox, FlexboxItem, Grid, GridItem, Swiper, SwiperItem, Divider } from 'vux'
 
 export default {
   components: {
-    Group,
-    Cell,
-    Panel,
     Divider,
     Flexbox,
     FlexboxItem,
@@ -138,10 +135,10 @@ export default {
   }
 }
 </script>
-
 <style>
-  .spance{
-    height: 10px;
+  .home .grid .weui-grid__icon{
+    width: 70px;
+    height: 70px;
   }
   .home .vux-slider > .vux-indicator > a > .vux-icon-dot{
     width: 10px;
@@ -152,9 +149,11 @@ export default {
   .home .vux-slider > .vux-indicator > a > .vux-icon-dot.active{
     background-color: #EA2C06;
   }
-  .home .weui-grid__icon{
-    width: 80px;
-    height: 80px;
+</style>
+
+<style scoped>
+  .spance{
+    height: 10px;
   }
   .grid{
     background-color: #FFFFFF;
