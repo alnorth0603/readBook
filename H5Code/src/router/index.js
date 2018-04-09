@@ -21,6 +21,11 @@ const router = new VueRouter({
       path: '/bindstudent',
       name: 'bindstudent',
       component: resolve => require(['@/components/bindstudent'], resolve)
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: resolve => require(['@/components/setting'], resolve)
     }
     // {
     //   path: '/init',
