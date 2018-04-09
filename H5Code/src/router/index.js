@@ -36,6 +36,10 @@ const router = new VueRouter({
       path: '/analyse',
       name: 'analyse',
       component: resolve => require(['@/components/analyse'], resolve)
+    }, {
+      path: '/classfellow',
+      name: 'classfellow',
+      component: resolve => require(['@/components/classfellow'], resolve)
     }
     // {
     //   path: '/init',
