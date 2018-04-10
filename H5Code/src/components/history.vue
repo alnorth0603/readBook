@@ -1,5 +1,5 @@
 <template>
-  <div class="classfellow">
+  <div class="history">
     <div>
       <masker>
         <div class="m-img" :style="topBg"></div>
@@ -20,22 +20,33 @@
                   <div class="flexbox-left">王乐</div>
                   <div class="flexbox-right">
                     <div class="flexbox-right-top">
-                      <div style='font-size:12px;line-height:35px;display:inline-block'>正在阅读书籍</div>
-                      <div class="text-overflow txt-right">《名人传》《名人传》《名人传》《名人传》《名人传》</div>
+                      <flexbox :gutter="0">
+                        <flexbox-item :span='3'>
+                          <div class="txt-1">10</div>
+                          <div class="txt-2">阅读日期</div>
+                        </flexbox-item>
+                        <flexbox-item :span='3'>
+                          <div class="txt-1">10</div>
+                          <div class="txt-2">开始页码</div>
+                        </flexbox-item>
+                        <flexbox-item :span='3'>
+                          <div class="txt-1">10</div>
+                          <div class="txt-2">结束页码</div>
+                        </flexbox-item>
+                        <flexbox-item :span='3'>
+                          <div class="txt-1">10</div>
+                          <div class="txt-2">时长(分)</div>
+                        </flexbox-item>
+                      </flexbox>
                     </div>
                     <div class="flexbox-right-bottom">
                       <flexbox :gutter="0">
-                        <flexbox-item :span='4' style="height:40px;">
-                          <div class="txt-1">10</div>
-                          <div class="txt-2">总计阅读本数</div>
-                        </flexbox-item>
                         <flexbox-item :span='4'>
                           <div class="txt-1">10</div>
-                          <div class="txt-2">总计时长</div>
+                          <div class="txt-2">家长评分</div>
                         </flexbox-item>
-                        <flexbox-item :span='4'>
-                          <div class="txt-1">10</div>
-                          <div class="txt-2">总计页数</div>
+                        <flexbox-item :span='8'>
+                          <div class="txt-3">总计时长</div>
                         </flexbox-item>
                       </flexbox>
                     </div>
@@ -63,7 +74,7 @@ export default {
   data () {
     return {
       topBg: {
-        backgroundImage: 'url(' + require('../assets/classfellow/banner.png') + ')'
+        backgroundImage: 'url(' + require('../assets/history/banner.png') + ')'
       },
       isMoreLoading: false,
       pullupConfig2: {
@@ -97,7 +108,7 @@ export default {
 }
 </script>
 <style>
-  .classfellow .vux-masker{
+  .history .vux-masker{
     background: transparent !important;
   }
 </style>
@@ -108,7 +119,7 @@ export default {
     white-space: nowrap;
     width: 100%;
   }
-  .classfellow{
+  .history{
     height: 100%;
     margin: 0;
     padding-top: 47px;
@@ -147,9 +158,8 @@ export default {
   }
   .flexbox-content .flexbox-left{
     width: 90px;
-    height: 90px;
+    height: 100px;
     display: inline-block;
-    line-height: 90px;
     text-align: center;
     font-weight: bold;
     font-size: 16px;
@@ -165,39 +175,28 @@ export default {
     width: 100%;
     box-sizing: border-box;
   }
-  .flexbox-right .flexbox-right-top{
-    position: relative;
-    height: 35px;
-    width: 100%;
-    font-size: 12px;
-    border-bottom: 1px solid #E0E0E0;
-    padding: 0 0 0 5px;
-  }
-  .flexbox-right .flexbox-right-bottom{
-    position: relative;
-    padding: 10px 0 0;
-  }
-  .flexbox-right .txt-right{
-    font-size: 14px;
-    line-height: 35px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    padding-left: 100px;
-    box-sizing: border-box;
-  }
-  .flexbox-right .flexbox-right-bottom .txt-1{
-    font-size: 16px;
-    line-height: 15px;
-    padding-bottom: 7px;
+  .flexbox-content .flexbox-right .txt-1{
+    font-size:16px;
     text-align: center;
   }
-  .flexbox-right .flexbox-right-bottom .txt-2{
-    line-height: 12px;
-    font-size: 12px;
-    padding-bottom: 5px;
+  .flexbox-content .flexbox-right .txt-2{
+    font-size:12px;
     text-align: center;
+  }
+  .flexbox-content .flexbox-right>div{
+    padding: 3px 0;
+  }
+  .flexbox-content .flexbox-right .flexbox-right-bottom{
+    border-top: 1px solid #E0E0E0;
+    box-sizing: content-box;
+  }
+  .flexbox-content .flexbox-right .txt-3{
+    font-size:14px;
+    text-align: center;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
   .vux-flexbox-item.active{
     background: #EEEEEE;

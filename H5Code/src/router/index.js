@@ -40,6 +40,14 @@ const router = new VueRouter({
       path: '/classfellow',
       name: 'classfellow',
       component: resolve => require(['@/components/classfellow'], resolve)
+    }, {
+      path: '/history',
+      name: 'history',
+      component: resolve => require(['@/components/history'], resolve)
+    }, {
+      path: '/readyhistory',
+      name: 'readyhistory',
+      component: resolve => require(['@/components/readyhistory'], resolve)
     }
     // {
     //   path: '/init',
