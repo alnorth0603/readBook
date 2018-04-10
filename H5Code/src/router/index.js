@@ -48,6 +48,14 @@ const router = new VueRouter({
       path: '/readyhistory',
       name: 'readyhistory',
       component: resolve => require(['@/components/readyhistory'], resolve)
+    }, {
+      path: '/checkout/index',
+      name: 'index',
+      component: resolve => require(['@/components/checkout/index'], resolve)
+    }, {
+      path: '/checkout/finish',
+      name: 'finish',
+      component: resolve => require(['@/components/checkout/finish'], resolve)
     }
     // {
     //   path: '/init',

@@ -74,7 +74,7 @@ export default {
   data () {
     return {
       topBg: {
-        backgroundImage: 'url(' + require('../assets/history/banner.png') + ')'
+        backgroundImage: 'url(' + require('@/assets/history/banner.png') + ')'
       },
       isMoreLoading: false,
       pullupConfig2: {

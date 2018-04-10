@@ -63,7 +63,7 @@ export default {
   data () {
     return {
       topBg: {
-        backgroundImage: 'url(' + require('../assets/classfellow/banner.png') + ')'
+        backgroundImage: 'url(' + require('@/assets/classfellow/banner.png') + ')'
       },
       isMoreLoading: false,
       pullupConfig2: {

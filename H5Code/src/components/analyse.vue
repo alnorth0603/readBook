@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       topBg: {
-        backgroundImage: 'url(' + require('../assets/analyse/banner.png') + ')'
+        backgroundImage: 'url(' + require('@/assets/analyse/banner.png') + ')'
       }
     }
   }
@@ -143,9 +143,7 @@ export default {
   .flex-bottom .flex-btn{
     width: 92%;
     height: 40px;
-    background: -webkit-linear-gradient(top, #57f3e6, #39DBCC);
     background: linear-gradient(top, #57f3e6, #39DBCC);
-    background: -moz-linear-gradient(top, #57f3e6, #39DBCC);
     line-height: 40px;
     color: #FFFFFF;
     text-align: center;

@@ -246,9 +246,7 @@ export default {
   .flex-bottom .flex-btn{
     width: 92%;
     height: 40px;
-    background: -webkit-linear-gradient(top, #C770FF, #9C57FF);
     background: linear-gradient(top, #C770FF, #9C57FF);
-    background: -moz-linear-gradient(top, #C770FF, #9C57FF);
     line-height: 40px;
     color: #FFFFFF;
     text-align: center;
