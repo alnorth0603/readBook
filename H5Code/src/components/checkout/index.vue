@@ -42,7 +42,7 @@
           </flexbox>
         </div>
       </div>
-      <div style="position: absolute;bottom:3px;" class="check-btn">开始测试</div>
+      <div style="position: absolute;bottom:0;" class="check-btn">开始测试</div>
     </div>
   </div>
 </template>
@@ -65,9 +65,6 @@ export default {
 <style scoped>
   .check-index{
     height: 100%;
-    margin: 0;
-    padding-top: 46px;
-    box-sizing: border-box;
     background:#FFFFFF;
   }
   .check-index .check-btn{

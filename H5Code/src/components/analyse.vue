@@ -70,11 +70,7 @@ export default {
 <style scoped>
   .analyse{
     height: 100%;
-    margin: 0;
-    padding-top: 47px;
-    box-sizing: border-box;
     background-color: #FFFFFF;
-    overflow: auto;
   }
   .m-img {
     padding-bottom: 33%;

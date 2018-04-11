@@ -54,11 +54,7 @@ export default {
 <style scoped>
   .check-finish{
     height: 100%;
-    margin: 0;
-    padding-top: 47px;
-    box-sizing: border-box;
     background-color: #FFFFFF;
-    overflow: auto;
   }
   .m-img {
     padding-bottom: 33%;
@@ -124,8 +120,8 @@ export default {
     text-align: center;
     margin: auto;
     border-radius: 6px;
-    letter-spacing: 8px;
-    font-size: 20px;
+    letter-spacing: 4px;
+    font-size: 1.1rem;
   }
   .flex-div .rest-check{
     width: 100%;
@@ -136,7 +132,7 @@ export default {
     text-align: center;
     margin: auto;
     border-radius: 6px;
-    letter-spacing: 8px;
-    font-size: 20px;
+    letter-spacing: 4px;
+    font-size: 1.1rem;
   }
 </style>

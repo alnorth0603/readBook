@@ -142,6 +142,9 @@ html, body {
   font-size: 22px;
   color: #888;
 }
+.lynn-tabbar.weui-tabbar{
+  background-color: #FFFFFF;
+}
 .lynn-tabbar .weui-bar__item_on .lynn-icon-22 {
   color: #F70968;
 }

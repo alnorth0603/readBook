@@ -76,9 +76,6 @@ export default {
 <style scoped>
   .check-flow{
     height: 100%;
-    margin: 0;
-    padding-top: 46px;
-    box-sizing: border-box;
     background:#FFFFFF;
   }
   .check-flow .check-btn-img{

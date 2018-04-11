@@ -4,15 +4,15 @@
     <divider class="spance"></divider>
     <div class="grid">
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/component/cell">
+        <grid-item @on-item-click="goToHerf('1')">
           <img slot="icon" src="../assets/home/icon_start_recorder.png">
           <span slot="label">开始记录</span>
         </grid-item>
-        <grid-item :link="{ path: '/component/cell'}">
+        <grid-item @on-item-click="goToHerf('2')">
           <img slot="icon" src="../assets/home/icon_good_books.png">
           <span slot="label">好书严选</span>
         </grid-item>
-        <grid-item link="/component/cell">
+        <grid-item @on-item-click="goToHerf('3')">
           <img slot="icon" src="../assets/home/icon_book_test.png">
           <span slot="label">书籍测试</span>
         </grid-item>
@@ -22,11 +22,11 @@
           <img slot="icon" src="../assets/home/icon_bound_student.png">
           <span slot="label">绑定学生</span>
         </grid-item>
-        <grid-item :link="{ path: '/component/cell'}">
+        <grid-item @on-item-click="goToHerf('5')">
           <img slot="icon" src="../assets/home/icon_busine_cooperate.png">
           <span slot="label">商务合作</span>
         </grid-item>
-        <grid-item link="/component/cell">
+        <grid-item @on-item-click="goToHerf('6')">
           <img slot="icon" src="../assets/home/icon_about_us.png">
           <span slot="label">关于我们</span>
         </grid-item>
@@ -81,6 +81,19 @@ export default {
     },
     onImgError (item, $event) {
       console.log(item, $event)
+    },
+    goToHerf (id) {
+      console.log(id)
+      switch (id) {
+        case '1':
+          this.$router.push({path: '/browse/home'})
+          break
+        case '3':
+          this.$router.push({path: '/checkout/index'})
+          break
+        default:
+          break
+      }
     }
   },
   data () {

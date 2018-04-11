@@ -177,11 +177,7 @@ export default {
 <style scoped>
   .b-student{
     height: 100%;
-    margin: 0;
-    padding-top: 47px;
-    box-sizing: border-box;
     background-color: #FFFFFF;
-    overflow: auto;
   }
   .nav-top{
     position: relative;

@@ -120,9 +120,6 @@ export default {
 <style scoped>
   .readyrecord{
     height: 100%;
-    margin: 0;
-    padding-top: 46px;
-    box-sizing: border-box;
   }
   .readyrecord .check-btn{
     width: 100%;
