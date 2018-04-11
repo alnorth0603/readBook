@@ -15,7 +15,7 @@
       </masker>
     </div>
     <div style="margin-top:50px">
-      <div style="font-size: 18px;padding: 0px 10%;">您的成绩为80分，答对题目80个，答错题目20个，成绩优异。希望您继续努力</div>
+      <div style="font-size: 18px;padding: 0px 10%;">您的成绩为80分，答对题目80个，答错题目20个，成绩优异。希望您继续努力!</div>
       <div style="padding: 30px 5%;">
         <flexbox class="flex-div">
           <flexbox-item>

@@ -53,6 +53,10 @@ const router = new VueRouter({
       name: 'index',
       component: resolve => require(['@/components/checkout/index'], resolve)
     }, {
+      path: '/checkout/flow',
+      name: 'flow',
+      component: resolve => require(['@/components/checkout/flow'], resolve)
+    }, {
       path: '/checkout/finish',
       name: 'finish',
       component: resolve => require(['@/components/checkout/finish'], resolve)
