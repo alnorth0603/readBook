@@ -19,8 +19,6 @@ router.get('/test', function(req, res) {
       'city':'@city(true)',//中国城市
       'color':'@color',//16进制颜色
       'fromObj|2':{'aa':'11','bb':'22','cc':'33','dd':'44'}//从obj对象中随机获取2个属性
-    }, {
-      'gf':'@cname'
     }]
   });
   return res.send({data:data});
