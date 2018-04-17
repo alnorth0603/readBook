@@ -24,6 +24,7 @@ const router = new VueRouter({
     {
       path: '/setting',
       name: 'setting',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/setting'], resolve)
     },
     {
@@ -68,31 +69,6 @@ const router = new VueRouter({
       name: 'login',
       component: resolve => require(['@/components/login'], resolve)
     }
-    // {
-    //   path: '/init',
-    //   name: 'init',
-    //   component: resolve => require(['../components/init.vue'], resolve),
-    //   children: [
-    //     {
-    //       path: 'personal/userInfo',
-    //       name: 'userInfo',
-    //       component: resolve => require(['@/components/personal/userInfo.vue'], resolve),
-    //       meta: {title: '主页'}
-    //     },
-    //     {
-    //       path: 'home',
-    //       name: 'home',
-    //       component: resolve => require(['../components/home.vue'], resolve),
-    //       meta: {title: '主页'}
-    //     }
-    //   ]
-    // },
-    // {
-    //   path: '/login',
-    //   name: 'login',
-    //   component: resolve => require(['../components/login.vue'], resolve),
-    //   meta: {title: '登录'}
-    // }
   ]
 })
 

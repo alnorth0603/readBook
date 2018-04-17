@@ -11,8 +11,8 @@ const state = {
 export default new Vuex.Store({
   state,
   mutations: {
-    UPDATE_USER (state, userInfo) {
-      state.userInfo = userInfo
+    UPDATE_USER (state, payload) {
+      state.userInfo = payload.userInfo
     },
     UPDATE_LOADING (state, payload) {
       state.isLoading = payload.isLoading

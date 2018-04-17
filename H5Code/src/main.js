@@ -4,8 +4,9 @@ import Vue from 'vue'
 import FastClick from 'fastclick'
 import App from './App'
 import router from './router'
+import HttpPlugin from './plugins/http'
 import { sync } from 'vuex-router-sync'
-import { AjaxPlugin, BusPlugin } from 'vux'
+import { BusPlugin, ToastPlugin } from 'vux'
 import store from './vuex/store'
 
 require('es6-promise').polyfill()
@@ -15,8 +16,10 @@ sync(store, router)
 /**
  * AjaxPlugin 插件依赖于 axios
  */
-Vue.use(AjaxPlugin)
+// Vue.use(AjaxPlugin)
+Vue.use(HttpPlugin)
 Vue.use(BusPlugin)
+Vue.use(ToastPlugin)
 
 const history = window.sessionStorage
 history.clear()
@@ -39,8 +42,17 @@ methods.forEach(key => {
 
 router.beforeEach(function (to, from, next) {
   store.commit('UPDATE_LOADING', {isLoading: true})
-  store.commit('UPDATE_USER', {name: 'aaa', sex: '1'})
-
+  store.commit('UPDATE_USER', {userInfo: {name: 'aaa'}})
+  console.log(store.state.userInfo)
+  if (to.meta.requireAuth) {
+    if (store.userInfo === undefined) {
+      next({path: '/login', query: {redirect: to.fullPath}})
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
 
