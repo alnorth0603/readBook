@@ -10,21 +10,6 @@ import store from './vuex/store'
 
 require('es6-promise').polyfill()
 
-store.registerModule('vux', {
-  state: {
-    isLoading: false,
-    direction: 'forward'
-  },
-  mutations: {
-    updateLoadingStatus (state, payload) {
-      state.isLoading = payload.isLoading
-    },
-    updateDirection (state, payload) {
-      state.direction = payload.direction
-    }
-  }
-})
-
 sync(store, router)
 
 /**
@@ -53,27 +38,28 @@ methods.forEach(key => {
 })
 
 router.beforeEach(function (to, from, next) {
-  store.commit('updateLoadingStatus', {isLoading: true})
+  store.commit('UPDATE_LOADING', {isLoading: true})
+  store.commit('UPDATE_USER', {name: 'aaa', sex: '1'})
 
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
 
   if (toIndex) {
     if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
-      store.commit('updateDirection', {direction: 'forward'})
+      store.commit('UPDATE_DIRECTION', {direction: 'forward'})
     } else {
       // 判断是否是ios左滑返回
       if (!isPush && (Date.now() - endTime) < 377) {
-        store.commit('updateDirection', {direction: ''})
+        store.commit('UPDATE_DIRECTION', {direction: ''})
       } else {
-        store.commit('updateDirection', { direction: 'reverse' })
+        store.commit('UPDATE_DIRECTION', { direction: 'reverse' })
       }
     }
   } else {
     ++historyCount
     history.setItem('count', historyCount)
     to.path !== '/' && history.setItem(to.path, historyCount)
-    store.commit('updateDirection', {direction: 'forward'})
+    store.commit('UPDATE_DIRECTION', {direction: 'forward'})
   }
 
   if (/\/http/.test(to.path)) {
@@ -86,7 +72,7 @@ router.beforeEach(function (to, from, next) {
 
 router.afterEach(function (to) {
   isPush = false
-  store.commit('updateLoadingStatus', {isLoading: false})
+  store.commit('UPDATE_LOADING', {isLoading: false})
 })
 
 FastClick.attach(document.body)

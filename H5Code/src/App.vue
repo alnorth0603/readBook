@@ -12,7 +12,7 @@
     :drawer-style="{'background-color':'#35495e', width: '200px'}">
 
       <!-- main content -->
-      <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px">
+      <view-box ref="viewBox" body-padding-top="46px" :body-padding-bottom="route.path === '/login' ? '0' : '55px'">
 
         <!-- header -->
         <x-header class="lynn-header" slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;" :transition="headerTransition" :left-options="leftOptions">
@@ -28,7 +28,7 @@
         </transition>
 
         <!-- tabbar -->
-        <tabbar class="lynn-tabbar">
+        <tabbar class="lynn-tabbar" v-show="route.path !== '/login'">
           <tabbar-item :selected="route.path === '/'" :link="{path:'/'}">
             <img slot="icon" src="./assets/tabbar/icon_home.png">
             <img slot="icon-active" src="./assets/tabbar/icon_home_red.png">
@@ -82,9 +82,8 @@ export default {
     ...mapState({
       route: state => state.route,
       path: state => state.route.path,
-      deviceready: state => state.app.deviceready,
-      isLoading: state => state.vux.isLoading,
-      direction: state => state.vux.direction
+      isLoading: state => state.isLoading,
+      direction: state => state.direction
     }),
     leftOptions () {
       return {

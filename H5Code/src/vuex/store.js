@@ -4,17 +4,21 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
+  userInfo: {},
   isLoading: false,
   direction: 'forward'
 }
 export default new Vuex.Store({
   state,
   mutations: {
-    UPDATE_LOADING (state, status) {
-      state.isLoading = status
+    UPDATE_USER (state, userInfo) {
+      state.userInfo = userInfo
     },
-    UPDATE_DIRECTION (state, direction) {
-      state.direction = direction
+    UPDATE_LOADING (state, payload) {
+      state.isLoading = payload.isLoading
+    },
+    UPDATE_DIRECTION (state, payload) {
+      state.direction = payload.direction
     }
   }
 })
