@@ -4,37 +4,39 @@
       <masker>
         <div class="m-img" :style="topBg"></div>
         <div slot="content" class="m-title">
-          小妹
+          {{ userInfo.studentName }}
           <br/>
-          八年级四班
+          {{ userInfo.className }}
         </div>
       </masker>
     </div>
     <div class="pull-scroll">
-      <scroller lock-x scrollbar-y use-pullup :pullup-config="pullupConfig2" height="500px" ref="demo2" @on-pullup-loading="load2">
+      <!-- <scroller lock-x scrollbar-y use-pullup :pullup-config="pullupConfig2" height="500px" ref="demo2" @on-pullup-loading="load2"> -->
+      <div class="pull-scroll-box">
+      <scroller lock-x height="100%">
         <div class="box2">
           <flexbox orient="vertical" :gutter="0">
-            <template v-for="(value, key, index) in object">
+            <template v-for="(value, key, index) in listData">
               <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
                 <div class="flexbox-content">
-                  <div class="flexbox-left">王乐</div>
+                  <div class="flexbox-left">{{ value.Name }}</div>
                   <div class="flexbox-right">
                     <div class="flexbox-right-top">
                       <div style='font-size:12px;line-height:35px;display:inline-block'>正在阅读书籍</div>
-                      <div class="text-overflow txt-right">《名人传》《名人传》《名人传》《名人传》《名人传》</div>
+                      <div class="text-overflow txt-right">《{{ value.ReadBookTitle }}》</div>
                     </div>
                     <div class="flexbox-right-bottom">
                       <flexbox :gutter="0">
                         <flexbox-item :span='4' style="height:40px;">
-                          <div class="txt-1">10</div>
+                          <div class="txt-1">{{ value.readBookCount }}</div>
                           <div class="txt-2">总计阅读本数</div>
                         </flexbox-item>
                         <flexbox-item :span='4'>
-                          <div class="txt-1">10</div>
+                          <div class="txt-1">{{ value.sumTimeCost }}</div>
                           <div class="txt-2">总计时长</div>
                         </flexbox-item>
                         <flexbox-item :span='4'>
-                          <div class="txt-1">10</div>
+                          <div class="txt-1">{{ value.sumPages }}</div>
                           <div class="txt-2">总计页数</div>
                         </flexbox-item>
                       </flexbox>
@@ -46,11 +48,13 @@
           </flexbox>
         </div>
       </scroller>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { Masker, Grid, GridItem, Flexbox, FlexboxItem, Scroller } from 'vux'
+import { mapState } from 'vuex'
 export default {
   components: {
     Masker,
@@ -65,34 +69,41 @@ export default {
       topBg: {
         backgroundImage: 'url(' + require('@/assets/classfellow/banner.png') + ')'
       },
-      isMoreLoading: false,
+      isMoreLoading: true,
       pullupConfig2: {
-        content: '上拉加载更多',
+        content: '无数据',
         downContent: '松开进行加载',
         upContent: '上拉加载更多',
         loadingContent: '加载中...'
       },
-      object: {
-        firstName: 'John',
-        lastName: 'Doe',
-        age: 30
-      }
+      listData: { }
     }
   },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
+  },
   methods: {
+    async getClassmate () {
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'get_classmate_read_list',
+          student_id: 10 // this.userInfo.studentId
+        },
+        tag: 'get_classmate_read_listlogin'
+      })
+      if (result.response_status === 1) {
+        this.listData = result.ClassMateRead_List
+      }
+    },
     load2 () {
-      setTimeout(() => {
-        this.n2 += 10
-        setTimeout(() => {
-          this.$refs.demo2.donePullup()
-        }, 100)
-        if (this.n2 === 30) { // unload plugin
-          setTimeout(() => {
-            this.$refs.demo2.disablePullup()
-          }, 100)
-        }
-      }, 2000)
+      // this.getClassmate()
     }
+  },
+  created () {
+    this.getClassmate()
   }
 }
 </script>
@@ -112,6 +123,19 @@ export default {
     height: 100%;
     background-color: #FFFFFF;
   }
+  .classfellow .pull-scroll{
+    height: 100%;
+    position: relative;
+  }
+  .classfellow .pull-scroll .pull-scroll-box{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 125px;
+  }
+  
   .m-img {
     padding-bottom: 33%;
     display: block;
@@ -127,7 +151,7 @@ export default {
     color: #fff;
     text-align: center;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 1.3rem;
     position: absolute;
     left: 0;
     right: 0;

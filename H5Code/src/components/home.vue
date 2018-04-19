@@ -146,9 +146,7 @@ export default {
       }]
     }
   },
-  created () {
-    this.gtTetx()
-  }
+  created () { }
 }
 </script>
 <style>

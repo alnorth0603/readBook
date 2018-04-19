@@ -4,34 +4,34 @@
       <masker>
         <div class="m-img" :style="topBg"></div>
         <div slot="content" class="m-title">
-          小妹
+          {{ userInfo.studentName }}
           <br/>
-          八年级四班
+          {{ userInfo.className }}
         </div>
       </masker>
     </div>
     <div class="t-color">
       <grid>
         <grid-item label="阅读书籍数量">
-          <div slot="icon" class="t-color1">20</div>
+          <div slot="icon" class="t-color1">{{ readBookCount }}</div>
         </grid-item>
         <grid-item label="阅读总计页数">
-          <div slot="icon" class="t-color2">20</div>
+          <div slot="icon" class="t-color2">{{ sumPage }}</div>
         </grid-item>
       </grid>
       <grid>
         <grid-item label="阅读时长总计">
-          <div slot="icon" class="t-color3">20</div>
+          <div slot="icon" class="t-color3">{{ sumTimeCost }}</div>
         </grid-item>
         <grid-item label="阅读总平均分">
-          <div slot="icon" class="t-color4">20</div>
+          <div slot="icon" class="t-color4">{{ avgScore }}</div>
         </grid-item>
       </grid>
     </div>
     <div>
       <flexbox style="margin: 50px 0;">
         <flexbox-item class="flex-bottom">
-          <div class="flex-div flex-btn" @click="onSumbit">我要测试</div>
+          <div class="flex-div flex-btn">我要测试</div>
         </flexbox-item>
       </flexbox>
     </div>
@@ -39,6 +39,7 @@
 </template>
 <script>
 import { Masker, Grid, GridItem, Flexbox, FlexboxItem } from 'vux'
+import { mapState } from 'vuex'
 export default {
   components: {
     Masker,
@@ -51,8 +52,38 @@ export default {
     return {
       topBg: {
         backgroundImage: 'url(' + require('@/assets/analyse/banner.png') + ')'
+      },
+      readBookCount: 0,
+      sumTimeCost: 0,
+      avgScore: 0,
+      sumPage: 0
+    }
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
+  },
+  methods: {
+    async getAnalysis () {
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'reading_analysis',
+          student_id: 10 // this.userInfo.studentId
+        },
+        tag: 'reading_analysis'
+      })
+      if (result.response_status === 1) {
+        this.readBookCount = result.ReadBookCount === null ? 0 : result.ReadBookCount
+        this.sumTimeCost = result.SumTimeCost === null ? 0 : result.SumTimeCost
+        this.avgScore = result.AvgScore === null ? 0 : result.AvgScore
+        this.sumPage = result.SumPages === null ? 0 : result.SumPages
       }
     }
+  },
+  created () {
+    this.getAnalysis()
   }
 }
 </script>

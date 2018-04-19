@@ -19,7 +19,7 @@ sync(store, router)
 // Vue.use(AjaxPlugin)
 Vue.use(HttpPlugin)
 Vue.use(BusPlugin)
-Vue.use(ToastPlugin)
+Vue.use(ToastPlugin, {position: 'top'})
 
 const history = window.sessionStorage
 history.clear()
@@ -42,8 +42,7 @@ methods.forEach(key => {
 
 router.beforeEach(function (to, from, next) {
   store.commit('UPDATE_LOADING', {isLoading: true})
-  store.commit('UPDATE_USER', {userInfo: {name: 'aaa'}})
-  console.log(store.state.userInfo)
+  console.log(store.userInfo)
   if (to.meta.requireAuth) {
     if (store.userInfo === undefined) {
       next({path: '/login', query: {redirect: to.fullPath}})

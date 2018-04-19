@@ -13,6 +13,7 @@ export default new Vuex.Store({
   mutations: {
     UPDATE_USER (state, payload) {
       state.userInfo = payload.userInfo
+      console.log(state.userInfo)
     },
     UPDATE_LOADING (state, payload) {
       state.isLoading = payload.isLoading

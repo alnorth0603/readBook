@@ -28,7 +28,7 @@
         </transition>
 
         <!-- tabbar -->
-        <tabbar class="lynn-tabbar" v-show="route.path !== '/login'">
+        <tabbar slot="bottom" class="lynn-tabbar" v-show="route.path !== '/login'">
           <tabbar-item :selected="route.path === '/'" :link="{path:'/'}">
             <img slot="icon" src="./assets/tabbar/icon_home.png">
             <img slot="icon-active" src="./assets/tabbar/icon_home_red.png">

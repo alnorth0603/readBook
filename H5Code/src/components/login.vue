@@ -11,26 +11,26 @@
         <flexbox-item>
           <div class="flex-div">
             <label class="flex-label">班级代码</label>
-            <div class="flex-input"><x-input class="input-color" v-model="classNumber" placeholder="请输入班级代码"></x-input></div>
+            <div class="flex-input"><x-input class="input-color" v-model="class_no" placeholder="请输入班级代码"></x-input></div>
           </div>
         </flexbox-item>
         <flexbox-item>
           <div class="flex-div">
             <label class="flex-label">学生姓名</label>
-            <div class="flex-input"><x-input class="input-color" v-model="studentName" placeholder="请输入学生姓名"></x-input></div>
+            <div class="flex-input"><x-input class="input-color" v-model="student_name" placeholder="请输入学生姓名"></x-input></div>
           </div>
         </flexbox-item>
         <flexbox-item>
           <div class="flex-div">
             <label class="flex-label">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
-            <div class="flex-input"><x-input class="input-color" v-model="studentNumber" placeholder="请输入学号"></x-input></div>
+            <div class="flex-input"><x-input class="input-color" v-model="student_no" placeholder="请输入学号"></x-input></div>
           </div>
         </flexbox-item>
         <flexbox-item>
           <div class="flex-div  flex-div-picker">
             <label class="flex-label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
             <div class="flex-input">
-              <popup-picker class="s-pop-pick" value-text-align='center' :data="sexData" v-model="sexVal" @on-show="onShow" @on-hide="onHide" @on-change="onChange" placeholder="请选择">
+              <popup-picker class="s-pop-pick" value-text-align='center' :data="sexData"  :columns="1" show-name v-model="gender" @on-change="onChange" placeholder="请选择">
                 <span slot="title" class="icon-down"></span>
               </popup-picker>
             </div>
@@ -57,37 +57,54 @@ export default {
   },
   data () {
     return {
-      sexData: [['女', '男']],
-      sexVal: ['女'],
-      classNumber: '',
-      studentNumber: '',
-      studentName: ''
+      sexData: [{name: '女', value: '1'}, {name: '男', value: '0'}],
+      gender: [],
+      class_no: '',
+      student_name: '',
+      student_no: ''
     }
   },
   methods: {
     onChange (val) {
-      console.log('val change', val)
-    },
-    onShow () {
-      console.log('on show')
-    },
-    onHide (type) {
-      console.log('on hide', type)
+      this.gender = val
     },
     async onSumbit () {
+      if (this.class_no === '') {
+        this.$vux.toast.text('请输入班级代码', 'middle')
+        return
+      }
+      if (this.student_name === '') {
+        this.$vux.toast.text('请输入学生姓名', 'middle')
+        return
+      }
+      // if (this.student_no === '') {
+      //   this.$vux.toast.text('请输入学号', 'middle')
+      //   return
+      // }
+      // if (this.gender[0] === '') {
+      //   this.$vux.toast.text('请选择性别', 'middle')
+      //   return
+      // }
       let result = await this.request({
         method: 'post',
         data: {
           request_method: 'student_login',
-          class_no: '139247',
-          student_name: '王静',
-          student_no: '',
-          student_gender: ''
+          class_no: this.class_no, // 139247
+          student_name: this.student_name,
+          student_no: this.student_no,
+          student_gender: this.gender.length === 0 ? '' : this.gender[0]
         },
         tag: 'login'
       })
-      if (result.status === 1) {
-        console.log(result)
+      if (result.response_status === 1) {
+        let userInfo = {}
+        userInfo.classNo = this.class_no
+        userInfo.className = result.student_class
+        userInfo.studentId = result.student_id
+        userInfo.studentName = this.student_name
+        userInfo.studentNo = this.student_no
+        userInfo.gender = this.gender.length === 0 ? '' : this.gender[0]
+        this.$store.commit('UPDATE_USER', {userInfo: userInfo})
       }
     }
   }
@@ -150,6 +167,9 @@ export default {
   .login .nav-bottom .s-pop-pick .weui-cell_access .weui-cell__ft:after{
     content: none;
   }
+  .login .flex-div .weui-input{
+    text-align: center; 
+  }
 </style>
 <style scoped>
   .login{
@@ -177,7 +197,8 @@ export default {
   }
   .bg-cover .bg-title{
     color: #AAAAAA;
-    font-size: 12px;
+    font-size: 1.2rem;
+    margin-top: -8px;
   }
   .nav-bottom{
     background: #FFFFFF;
@@ -195,6 +216,7 @@ export default {
     padding-left: 60px;
     position: relative;
     overflow: hidden;
+    text-align: center; 
   }
   .input-color{
     color: #AAAAAA;
