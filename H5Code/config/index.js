@@ -11,14 +11,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        // target: 'http://192.168.1.34:3000',
-        target: 'http://172.16.0.85:3000',
-        // target: 'http://10.10.10.60:3000',
-        // target: 'http://localhost:3000',
+      '/InterfaceService': {
+        target: 'http://cw.91cdx.com',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/api'
+          '^/InterfaceService': '/InterfaceService'
         }
       }
     },

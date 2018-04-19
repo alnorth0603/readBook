@@ -83,6 +83,7 @@ export default {
       route: state => state.route,
       path: state => state.route.path,
       isLoading: state => state.isLoading,
+      ajaxShow: state => state.ajaxShow,
       direction: state => state.direction
     }),
     leftOptions () {

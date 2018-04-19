@@ -76,20 +76,6 @@ export default {
     SwiperItem
   },
   methods: {
-    async gtTetx () {
-      console.log('gtTetx')
-      let result = await this.request({
-        method: 'post',
-        url: '/api/useranalyze/userList/userList',
-        tag: 'calender',
-        data: {
-          userId: 1
-        }
-      })
-      if (result.status === 'success') {
-        console.log(result)
-      }
-    },
     onItemClick () {
       console.log('on item click')
     },

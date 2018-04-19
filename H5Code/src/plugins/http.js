@@ -8,13 +8,12 @@ export default {
 
 export const request = function (method, url, data, tag) {
   if (typeof method === 'object') {
-    url = method.url
+    url = '/InterfaceService/CwInterface.aspx'
     data = method.data
     tag = method.tag  // loading的字段标识
     method = method.method || 'get'
   }
-  // 是否有this，组件中是否写loading
-  const needLoading = tag && this && this.loading
+  const needLoading = tag
   if (needLoading) {
     this.$store.commit('UPDATE_LOADING', {isLoading: true})
   }
@@ -26,11 +25,11 @@ export const request = function (method, url, data, tag) {
       'Content-Type': 'application/json',
       timeout: 60000
     }).then((response) => {
-      let status = response.data
-      if (status !== 'success') {
+      let resData = response.data
+      if (resData.response_status !== 1) {
         this.$vux.toast.show({
           type: 'warn',
-          text: 'Loading',
+          text: resData.response_msg,
           position: 'middle'
         })
       }
@@ -56,7 +55,6 @@ export const request = function (method, url, data, tag) {
       switch (err.response && err.response.status) {
         case 401:
         case 600:
-          this.$store.commit('base/isLogin$$', 'fail')
           this.$router.push({
             path: '/login',
             query: {redirect: this.$route.fullPath}

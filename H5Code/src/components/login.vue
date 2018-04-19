@@ -47,7 +47,6 @@
 </template>
 <script>
 import { XInput, PopupPicker, Flexbox, FlexboxItem, Cell } from 'vux'
-import { setTimeout } from 'timers'
 export default {
   components: {
     XInput,
@@ -75,12 +74,21 @@ export default {
     onHide (type) {
       console.log('on hide', type)
     },
-    onSumbit () {
-      console.log('onSumbit')
-      this.$store.commit('UPDATE_LOADING', {isLoading: true})
-      setTimeout(() => {
-        this.$store.commit('UPDATE_LOADING', {isLoading: false})
-      }, 5000)
+    async onSumbit () {
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'student_login',
+          class_no: '139247',
+          student_name: '王静',
+          student_no: '',
+          student_gender: ''
+        },
+        tag: 'login'
+      })
+      if (result.status === 1) {
+        console.log(result)
+      }
     }
   }
 }
