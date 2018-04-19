@@ -80,7 +80,7 @@ export default {
       console.log('gtTetx')
       let result = await this.request({
         method: 'post',
-        url: '/news/index',
+        url: '/api/useranalyze/userList/userList',
         tag: 'calender',
         data: {
           userId: 1
