@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/InterfaceService': {
-        target: 'http://cw.91cdx.com',
+        target: 'http://cw.91chuangwen.com',
         changeOrigin: true,
         pathRewrite: {
           '^/InterfaceService': '/InterfaceService'

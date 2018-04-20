@@ -42,9 +42,8 @@ methods.forEach(key => {
 
 router.beforeEach(function (to, from, next) {
   store.commit('UPDATE_LOADING', {isLoading: true})
-  console.log(store.userInfo)
   if (to.meta.requireAuth) {
-    if (store.userInfo === undefined) {
+    if (store.getters['userInfo$$'] === null) {
       next({path: '/login', query: {redirect: to.fullPath}})
     } else {
       next()

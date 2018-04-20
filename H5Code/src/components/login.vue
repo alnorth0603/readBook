@@ -104,7 +104,9 @@ export default {
         userInfo.studentName = this.student_name
         userInfo.studentNo = this.student_no
         userInfo.gender = this.gender.length === 0 ? '' : this.gender[0]
-        this.$store.commit('UPDATE_USER', {userInfo: userInfo})
+        this.$store.commit('userInfo$$', userInfo)
+        let {redirect = '/'} = this.$route.query
+        this.$router.push({path: redirect})
       }
     }
   }
