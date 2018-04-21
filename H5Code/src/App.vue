@@ -197,7 +197,7 @@ html, body {
 
 .router-view {
   width: 100%;
-  top: 46px;
+  height: 100%;
 }
 .vux-pop-out-enter-active,
 .vux-pop-out-leave-active,

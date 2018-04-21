@@ -3,31 +3,31 @@
     <swiper :list="listData" auto height="180px" dots-position="center" ></swiper>
     <div class="grid">
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/readyrecord">
+        <grid-item link="/browse/readyrecord">
           <img slot="icon" src="@/assets/home/icon_start_recorder.png">
           <span slot="label">开始记录</span>
         </grid-item>
-        <grid-item link="/history">
+        <grid-item link="/browse/history">
           <img slot="icon" src="@/assets/home/icon_good_books.png">
           <span slot="label">历史查看</span>
         </grid-item>
       </grid>
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/classfellow">
+        <grid-item link="/browse/classfellow">
           <img slot="icon" src="@/assets/home/icon_bound_student.png">
           <span slot="label">同班同学</span>
         </grid-item>
-        <grid-item link="/analyse">
+        <grid-item link="/browse/analyse">
           <img slot="icon" src="@/assets/browse/icon_analyse.png">
           <span slot="label">阅读分析</span>
         </grid-item>
       </grid>
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/readyhistory">
+        <grid-item link="/browse/readyhistory">
           <img slot="icon" src="@/assets/browse/icon_read_book.png">
           <span slot="label">已读书籍</span>
         </grid-item>
-        <grid-item link="/checkout/index">
+        <grid-item link="/browse/checkout">
           <img slot="icon" src="@/assets/home/icon_book_test.png">
           <span slot="label">书籍测试</span>
         </grid-item>

@@ -13,7 +13,7 @@
             </flexbox-item>
             <flexbox-item>
               <div>
-                <p style="padding: 10px 0;">《巴黎圣母院》</p>
+                <p style="padding: 10px 0;font-size: 1.3rem;">《巴黎圣母院》</p>
                 <p style="font-size: 12px;">书名:书名书名</p>
                 <p style="font-size: 12px;">出版社:出版社出版社出版社</p>
                 <p style="font-size: 12px;">作者:作者作者</p>
@@ -25,7 +25,11 @@
               <div>
                 <div class="flex-div-head">
                   <cell is-link :border-intent="false" :arrow-direction="bookMore ? 'up' : 'down'" @click.native="bookMore = !bookMore">
-                    <span slot="title" style="font-size: 14px;">阅读过的书籍</span>
+                    <span slot="title" style="font-size: 14px;">
+                      <x-input title="必须输入2333" :is-type="be2333" placeholder="I'm placeholder">
+                        <img slot="label" style="padding-right:10px;display:block;" src="http://dn-placeholder.qbox.me/110x110/FF2D55/000" width="24" height="24">
+                      </x-input>
+                    </span>
                     <img slot="icon" width="20" style="display:block;margin-right:5px;" :src='iconBook' />
                   </cell>
                 </div>

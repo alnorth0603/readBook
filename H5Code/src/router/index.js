@@ -17,11 +17,6 @@ const router = new VueRouter({
       component: resolve => require(['@/components/home'], resolve)
     },
     {
-      path: '/bindstudent',
-      name: 'bindstudent',
-      component: resolve => require(['@/components/bindstudent'], resolve)
-    },
-    {
       path: '/setting',
       name: 'setting',
       meta: {requireAuth: true},
@@ -33,36 +28,44 @@ const router = new VueRouter({
       component: resolve => require(['@/components/browse/home'], resolve)
     },
     {
-      path: '/analyse',
+      path: '/browse/analyse',
       name: 'analyse',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/analyse'], resolve)
     }, {
-      path: '/classfellow',
+      path: '/browse/classfellow',
       name: 'classfellow',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/classfellow'], resolve)
     }, {
-      path: '/history',
+      path: '/browse/history',
       name: 'history',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/history'], resolve)
     }, {
-      path: '/readyhistory',
+      path: '/browse/readyhistory',
       name: 'readyhistory',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/readyhistory'], resolve)
     }, {
-      path: '/readyrecord',
+      path: '/browse/readyrecord',
       name: 'readyrecord',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/readyrecord'], resolve)
     }, {
-      path: '/checkout/index',
+      path: '/browse/checkout',
       name: 'index',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/checkout/index'], resolve)
     }, {
-      path: '/checkout/flow',
+      path: '/browse/checkout/flow',
       name: 'flow',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/checkout/flow'], resolve)
     }, {
-      path: '/checkout/finish',
+      path: '/browse/checkout/finish',
       name: 'finish',
+      meta: {requireAuth: true},
       component: resolve => require(['@/components/checkout/finish'], resolve)
     }, {
       path: '/login',

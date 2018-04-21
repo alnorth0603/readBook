@@ -18,7 +18,7 @@
         </grid-item>
       </grid>
       <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/bindstudent">
+        <grid-item link="/login">
           <img slot="icon" src="../assets/home/icon_bound_student.png">
           <span slot="label">绑定学生</span>
         </grid-item>
@@ -89,9 +89,10 @@ export default {
           this.$router.push({path: '/browse/home'})
           break
         case '3':
-          this.$router.push({path: '/checkout/index'})
+          this.$router.push({path: '/browse/checkout'})
           break
         default:
+          this.$vux.toast.text('暂未开放', 'middle')
           break
       }
     }

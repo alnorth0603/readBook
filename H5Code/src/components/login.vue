@@ -103,6 +103,7 @@ export default {
         userInfo.studentId = result.student_id
         userInfo.studentName = this.student_name
         userInfo.studentNo = this.student_no
+        userInfo.school = result.student_school
         userInfo.gender = this.gender.length === 0 ? '' : this.gender[0]
         this.$store.commit('userInfo$$', userInfo)
         let {redirect = '/'} = this.$route.query
