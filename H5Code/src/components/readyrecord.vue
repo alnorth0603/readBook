@@ -1,46 +1,48 @@
 
 <template>
-  <div class="readyrecord">
-    <div style="position: relative;height: 100%;">
-      <div class="check-btn">阅读记录</div>
-      <div style="width: 100%;">
-        <div>
-          <flexbox style="margin: 20px auto;" :gutter="0">
-            <flexbox-item style="text-align: center;">
-              <div style="width: 80px; height:118px;margin: auto;">
-                <img style="display: block;height: 100%;width: 100%;" src='../assets/readyrecord/book_bg.png' />
-              </div>
-            </flexbox-item>
-            <flexbox-item>
-              <div>
-                <p style="padding: 10px 0;font-size: 1.3rem;">《巴黎圣母院》</p>
-                <p style="font-size: 12px;">书名:书名书名</p>
-                <p style="font-size: 12px;">出版社:出版社出版社出版社</p>
-                <p style="font-size: 12px;">作者:作者作者</p>
-              </div>
-            </flexbox-item>
-          </flexbox>
-          <flexbox class="flex-div">
-            <flexbox-item>
-              <div>
-                <div class="flex-div-head">
-                  <cell is-link :border-intent="false" :arrow-direction="bookMore ? 'up' : 'down'" @click.native="bookMore = !bookMore">
-                    <span slot="title" style="font-size: 14px;">
-                      <x-input title="必须输入2333" :is-type="be2333" placeholder="I'm placeholder">
-                        <img slot="label" style="padding-right:10px;display:block;" src="http://dn-placeholder.qbox.me/110x110/FF2D55/000" width="24" height="24">
-                      </x-input>
-                    </span>
-                    <img slot="icon" width="20" style="display:block;margin-right:5px;" :src='iconBook' />
-                  </cell>
+  <div>
+    <div class="readyrecord">
+      <div style="position: relative;height: 100%;">
+        <div class="check-btn">阅读记录</div>
+        <div style="width: 100%;">
+          <div>
+            <flexbox style="margin: 20px auto;" :gutter="0">
+              <flexbox-item style="text-align: center;">
+                <div style="width: 80px; height:118px;margin: auto;">
+                  <img style="display: block;height: 100%;width: 100%;" src='../assets/readyrecord/book_bg.png' />
                 </div>
-                <div class="slide" :class="bookMore?'animate':''">
-                  <cell-form-preview :border-intent="false" :list="bookInfo"></cell-form-preview>
+              </flexbox-item>
+              <flexbox-item>
+                <div>
+                  <p style="padding: 10px 0;font-size: 1.3rem;">《巴黎圣母院》</p>
+                  <p style="font-size: 12px;">书名:书名书名</p>
+                  <p style="font-size: 12px;">出版社:出版社出版社出版社</p>
+                  <p style="font-size: 12px;">作者:作者作者</p>
                 </div>
-              </div>
-            </flexbox-item>
-          </flexbox>
+              </flexbox-item>
+            </flexbox>
+            <flexbox class="flex-div">
+              <flexbox-item>
+                <div>
+                  <div class="flex-div-head">
+                    <cell is-link :border-intent="false" :arrow-direction="bookMore ? 'up' : 'down'" @click.native="bookMore = !bookMore">
+                      <span slot="title" style="font-size: 14px;">
+                        <x-input title="必须输入2333" :is-type="be2333" placeholder="I'm placeholder">
+                          <img slot="label" style="padding-right:10px;display:block;" src="http://dn-placeholder.qbox.me/110x110/FF2D55/000" width="24" height="24">
+                        </x-input>
+                      </span>
+                      <img slot="icon" width="20" style="display:block;margin-right:5px;" :src='iconBook' />
+                    </cell>
+                  </div>
+                  <div class="slide" :class="bookMore?'animate':''">
+                    <cell-form-preview :border-intent="false" :list="bookInfo"></cell-form-preview>
+                  </div>
+                </div>
+              </flexbox-item>
+            </flexbox>
+          </div>
+          <div style="border-radius: 6px; width:90%;font-size: 15px;height: 35px;line-height: 35px; margin-top:30px;" class="check-btn">提交</div>
         </div>
-        <div style="border-radius: 6px; width:90%;font-size: 15px;height: 35px;line-height: 35px; margin-top:30px;" class="check-btn">提交</div>
       </div>
     </div>
   </div>

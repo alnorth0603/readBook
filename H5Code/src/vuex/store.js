@@ -13,10 +13,12 @@ const plugins = [...myPlugins]
 const debug = process.env.NODE_ENV !== 'production'
 debug && plugins.push(createLogger())
 
+const shouldUseTransition = !/transition=none/.test(location.href)
+
 const state = {
   userInfo: '',
   isLoading: false,
-  direction: 'forward'
+  direction: shouldUseTransition ? 'forward' : ''
 }
 export default new Vuex.Store({
   state,
@@ -24,10 +26,13 @@ export default new Vuex.Store({
     [UPDATE_USER] (state, payload) {
       state.userInfo = payload
     },
-    UPDATE_LOADING (state, payload) {
+    UPDATE_LOADING_STATUS (state, payload) {
       state.isLoading = payload.isLoading
     },
     UPDATE_DIRECTION (state, payload) {
+      if (!shouldUseTransition) {
+        return
+      }
       state.direction = payload.direction
     }
   },

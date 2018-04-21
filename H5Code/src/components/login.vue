@@ -1,48 +1,50 @@
 <template>
-  <div class="login">
-    <div class="nav-top">
-      <div class="bg-cover">
-        <img class="bg-head" src="../assets/bindstudent/banner.png" />
-        <div class="bg-title">登录</div>
+  <div>
+    <div class="login">
+      <div class="nav-top">
+        <div class="bg-cover">
+          <img class="bg-head" src="../assets/bindstudent/banner.png" />
+          <div class="bg-title">请填写您的信息</div>
+        </div>
       </div>
-    </div>
-    <div class="nav-bottom">
-      <flexbox orient="vertical">
-        <flexbox-item>
-          <div class="flex-div">
-            <label class="flex-label">班级代码</label>
-            <div class="flex-input"><x-input class="input-color" v-model="class_no" placeholder="请输入班级代码"></x-input></div>
-          </div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="flex-div">
-            <label class="flex-label">学生姓名</label>
-            <div class="flex-input"><x-input class="input-color" v-model="student_name" placeholder="请输入学生姓名"></x-input></div>
-          </div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="flex-div">
-            <label class="flex-label">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
-            <div class="flex-input"><x-input class="input-color" v-model="student_no" placeholder="请输入学号"></x-input></div>
-          </div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="flex-div  flex-div-picker">
-            <label class="flex-label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
-            <div class="flex-input">
-              <popup-picker class="s-pop-pick" value-text-align='center' :data="sexData"  :columns="1" show-name v-model="gender" @on-change="onChange" placeholder="请选择">
-                <span slot="title" class="icon-down"></span>
-              </popup-picker>
+      <div class="nav-bottom">
+        <flexbox orient="vertical">
+          <flexbox-item>
+            <div class="flex-div">
+              <label class="flex-label">班级代码</label>
+              <div class="flex-input"><x-input class="input-color" v-model="class_no" placeholder="请输入班级代码"></x-input></div>
             </div>
-          </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="flex-div">
+              <label class="flex-label">学生姓名</label>
+              <div class="flex-input"><x-input class="input-color" v-model="student_name" placeholder="请输入学生姓名"></x-input></div>
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="flex-div">
+              <label class="flex-label">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
+              <div class="flex-input"><x-input class="input-color" v-model="student_no" placeholder="请输入学号"></x-input></div>
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <div class="flex-div  flex-div-picker">
+              <label class="flex-label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
+              <div class="flex-input">
+                <popup-picker class="s-pop-pick" value-text-align='center' :data="sexData"  :columns="1" show-name v-model="gender" @on-change="onChange" placeholder="请选择">
+                  <span slot="title" class="icon-down"></span>
+                </popup-picker>
+              </div>
+            </div>
+          </flexbox-item>
+        </flexbox>
+      </div>
+      <flexbox style="margin: 50px 0;">
+        <flexbox-item class="flex-bottom">
+          <div class="flex-div flex-btn" @click="onSumbit">确认提交</div>
         </flexbox-item>
       </flexbox>
     </div>
-    <flexbox style="margin: 50px 0;">
-      <flexbox-item class="flex-bottom">
-        <div class="flex-div flex-btn" @click="onSumbit">登录</div>
-      </flexbox-item>
-    </flexbox>
   </div>
 </template>
 <script>
@@ -77,14 +79,6 @@ export default {
         this.$vux.toast.text('请输入学生姓名', 'middle')
         return
       }
-      // if (this.student_no === '') {
-      //   this.$vux.toast.text('请输入学号', 'middle')
-      //   return
-      // }
-      // if (this.gender[0] === '') {
-      //   this.$vux.toast.text('请选择性别', 'middle')
-      //   return
-      // }
       let result = await this.request({
         method: 'post',
         data: {
@@ -200,8 +194,7 @@ export default {
   }
   .bg-cover .bg-title{
     color: #AAAAAA;
-    font-size: 1.2rem;
-    margin-top: -8px;
+    font-size: 12px;
   }
   .nav-bottom{
     background: #FFFFFF;

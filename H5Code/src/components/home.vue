@@ -1,69 +1,71 @@
 <template>
-  <div class="home">
-    <swiper :list="listData" auto height="180px" dots-position="center" ></swiper>
-    <divider class="spance"></divider>
-    <div class="grid">
-      <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item @on-item-click="goToHerf('1')">
-          <img slot="icon" src="../assets/home/icon_start_recorder.png">
-          <span slot="label">开始记录</span>
-        </grid-item>
-        <grid-item @on-item-click="goToHerf('2')">
-          <img slot="icon" src="../assets/home/icon_good_books.png">
-          <span slot="label">好书严选</span>
-        </grid-item>
-        <grid-item @on-item-click="goToHerf('3')">
-          <img slot="icon" src="../assets/home/icon_book_test.png">
-          <span slot="label">书籍测试</span>
-        </grid-item>
-      </grid>
-      <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/login">
-          <img slot="icon" src="../assets/home/icon_bound_student.png">
-          <span slot="label">绑定学生</span>
-        </grid-item>
-        <grid-item @on-item-click="goToHerf('5')">
-          <img slot="icon" src="../assets/home/icon_busine_cooperate.png">
-          <span slot="label">商务合作</span>
-        </grid-item>
-        <grid-item @on-item-click="goToHerf('6')">
-          <img slot="icon" src="../assets/home/icon_about_us.png">
-          <span slot="label">关于我们</span>
-        </grid-item>
-      </grid>
-    </div>
-    <flexbox orient="vertical" :gutter="0">
-      <flexbox-item>
-        <div class="middel_banner">
-          <img style="display:block;" height="100%" width="100%" src="../assets/home/middel_banner.png" />
-        </div>
-      </flexbox-item>
-      <flexbox-item>
-        <div class="rb-panel">
-          <div class="rb-panel__bd">
-            <div v-for='(item,index) in list' class="rb-media-box">
-              <div class="rb-media-box_appmsg">
-                <div class="rb-media-box__hd">
-                  <img :src="item.src" alt="" class="rb-media-box__thumb">
-                </div>
-                <div class="rb-media-box__bd">
-                  <div class="rb-media-box__title">{{ item.title }}</div>
-                  <div class="rb-media-box__time">{{ item.date }}</div>
-                  <div class="rb-media-box__desc">
-                    <span>阅读量：{{ item.readCount }}</span><span class="icon-xin">{{ item.xinCount }}</span>
+  <div>
+    <div class="home">
+      <swiper :list="listData" auto height="180px" dots-position="center" ></swiper>
+      <div class="grid">
+        <grid :show-lr-borders="false" :show-vertical-dividers="false">
+          <grid-item @on-item-click="goToHerf('1')">
+            <img slot="icon" src="../assets/home/icon_start_recorder.png">
+            <span slot="label">开始记录</span>
+          </grid-item>
+          <grid-item @on-item-click="goToHerf('2')">
+            <img slot="icon" src="../assets/home/icon_good_books.png">
+            <span slot="label">好书严选</span>
+          </grid-item>
+          <grid-item @on-item-click="goToHerf('3')">
+            <img slot="icon" src="../assets/home/icon_book_test.png">
+            <span slot="label">书籍测试</span>
+          </grid-item>
+        </grid>
+        <grid :show-lr-borders="false" :show-vertical-dividers="false">
+          <grid-item link="/login">
+            <img slot="icon" src="../assets/home/icon_bound_student.png">
+            <span slot="label">绑定学生</span>
+          </grid-item>
+          <grid-item @on-item-click="goToHerf('5')">
+            <img slot="icon" src="../assets/home/icon_busine_cooperate.png">
+            <span slot="label">商务合作</span>
+          </grid-item>
+          <grid-item @on-item-click="goToHerf('6')">
+            <img slot="icon" src="../assets/home/icon_about_us.png">
+            <span slot="label">关于我们</span>
+          </grid-item>
+        </grid>
+      </div>
+      <flexbox orient="vertical" :gutter="0">
+        <flexbox-item>
+          <div class="middel_banner">
+            <img style="display:block;" height="100%" width="100%" src="../assets/home/middel_banner.png" />
+          </div>
+        </flexbox-item>
+        <flexbox-item>
+          <div class="rb-panel">
+            <div class="rb-panel__bd">
+              <div v-for='(item,index) in list' class="rb-media-box">
+                <div class="rb-media-box_appmsg">
+                  <div class="rb-media-box__hd">
+                    <img :src="item.src" alt="" class="rb-media-box__thumb">
+                  </div>
+                  <div class="rb-media-box__bd">
+                    <div class="rb-media-box__title">{{ item.title }}</div>
+                    <div class="rb-media-box__time">{{ item.date }}</div>
+                    <div class="rb-media-box__desc">
+                      <span>阅读量：{{ item.readCount }}</span><span class="icon-xin">{{ item.xinCount }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </flexbox-item>
-    </flexbox>
+        </flexbox-item>
+      </flexbox>
+    </div>
   </div>
 </template>
 
 <script>
 import { Flexbox, FlexboxItem, Grid, GridItem, Swiper, SwiperItem, Divider } from 'vux'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -75,6 +77,9 @@ export default {
     Swiper,
     SwiperItem
   },
+  computed: {
+    ...mapGetters(['userInfo$$'])
+  },
   methods: {
     onItemClick () {
       console.log('on item click')
@@ -83,32 +88,44 @@ export default {
       console.log(item, $event)
     },
     goToHerf (id) {
-      console.log(id)
       switch (id) {
         case '1':
-          this.$router.push({path: '/browse/home'})
+          if (this.userInfo$$ === null) {
+            this.$router.push({path: '/login'})
+          } else {
+            this.$router.push({path: '/browse/home'})
+          }
           break
         case '3':
-          this.$router.push({path: '/browse/checkout'})
+          this.$router.push({path: '/login'})
           break
         default:
           this.$vux.toast.text('暂未开放', 'middle')
           break
       }
+    },
+    async getListBanner () {
+      this.listData = []
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'get_carousel_list'
+        },
+        tag: 'get_carousel_list'
+      })
+      if (result.response_status === 1) {
+        result.Carousel_List.forEach(element => {
+          let temData = {}
+          temData.url = element.CarouselUrl
+          temData.img = element.CarouselImg
+          this.listData.push(temData)
+        })
+      }
     }
   },
   data () {
     return {
-      listData: [{
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/1.jpg'
-      }, {
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/2.jpg'
-      }, {
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/1.jpg'
-      }],
+      listData: [ ],
       list: [{
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一',
@@ -147,7 +164,9 @@ export default {
       }]
     }
   },
-  created () { }
+  created () {
+    this.getListBanner()
+  }
 }
 </script>
 <style>
@@ -167,9 +186,6 @@ export default {
 </style>
 
 <style scoped>
-  .spance{
-    height: 10px;
-  }
   .grid{
     background-color: #FFFFFF;
     margin-top: 10px;

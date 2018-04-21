@@ -1,60 +1,67 @@
 <template>
-  <div class="readyhistory">
-    <div>
-      <masker>
-        <div class="m-img" :style="topBg"></div>
-        <div slot="content" class="m-title">
-          小妹
-          <br/>
-          八年级四班
-        </div>
-      </masker>
-    </div>
-    <div class="pull-scroll">
-      <scroller lock-x scrollbar-y use-pullup :pullup-config="pullupConfig2" height="500px" ref="demo2" @on-pullup-loading="load2">
-        <div class="box2">
-          <flexbox orient="vertical" :gutter="0">
-            <template v-for="(value, key, index) in object">
-              <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
-                <div class="flexbox-content">
-                  <div class="flexbox-left">王乐</div>
-                  <div class="flexbox-right">
-                    <div class="flexbox-right-top">
-                      <flexbox :gutter="0">
-                        <flexbox-item :span='6'>
-                          <div class="txt-1">10</div>
-                          <div class="txt-2">总计页数</div>
-                        </flexbox-item>
-                        <flexbox-item :span='6'>
-                          <div class="txt-1">10</div>
-                          <div class="txt-2">平均阅读得分</div>
-                        </flexbox-item>
-                      </flexbox>
+  <div>
+    <div class="readyhistory">
+      <div>
+        <masker>
+          <div class="m-img" :style="topBg"></div>
+          <div slot="content" class="m-title">
+            {{ userInfo$$.studentName }}
+            <br/>
+            {{ userInfo$$.className }}
+          </div>
+        </masker>
+      </div>
+      <div class="pull-scroll">
+        <div class="pull-scroll-box">
+          <scroller lock-x scrollbar-y use-pullup height="100%" :pullup-config="pullupConfig" ref="pullup_more" @on-pullup-loading="loadMore">
+            <div class="box2">
+              <flexbox orient="vertical" :gutter="0">
+                <template v-for="(item, key, index) in listDataOpt.data">
+                  <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
+                    <div class="flexbox-content">
+                      <div class="flexbox-left">
+                        <img :src='item.BookImg'/>
+                      </div>
+                      <div class="flexbox-right">
+                        <div class="flexbox-right-top">
+                          <flexbox :gutter="0">
+                            <flexbox-item :span='6'>
+                              <div class="txt-1">{{ item.maxEndingPages }}</div>
+                              <div class="txt-2">总计页数</div>
+                            </flexbox-item>
+                            <flexbox-item :span='6'>
+                              <div class="txt-1">{{ item.avgScore }}</div>
+                              <div class="txt-2">平均阅读得分</div>
+                            </flexbox-item>
+                          </flexbox>
+                        </div>
+                        <div class="flexbox-right-bottom">
+                          <flexbox :gutter="0">
+                            <flexbox-item :span='6'>
+                              <div class="txt-1">{{ item.sumTimeCost }}</div>
+                              <div class="txt-2">总计时长</div>
+                            </flexbox-item>
+                            <flexbox-item :span='6'>
+                              <div class="txt-1">{{ item.quizScore }}</div>
+                              <div class="txt-2">测验得分</div>
+                            </flexbox-item>
+                          </flexbox>
+                        </div>
+                      </div>
                     </div>
-                    <div class="flexbox-right-bottom">
-                      <flexbox :gutter="0">
-                        <flexbox-item :span='6'>
-                          <div class="txt-1">10</div>
-                          <div class="txt-2">总计时长</div>
-                        </flexbox-item>
-                        <flexbox-item :span='6'>
-                          <div class="txt-1">10</div>
-                          <div class="txt-2">测验得分</div>
-                        </flexbox-item>
-                      </flexbox>
-                    </div>
-                  </div>
-                </div>
-              </flexbox-item>
-            </template>
-          </flexbox>
+                  </flexbox-item>
+                </template>
+              </flexbox>
+            </div>
+          </scroller>
         </div>
-      </scroller>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { Masker, Grid, GridItem, Flexbox, FlexboxItem, Scroller } from 'vux'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Masker,
@@ -64,39 +71,67 @@ export default {
     FlexboxItem,
     Scroller
   },
+  computed: {
+    ...mapGetters(['userInfo$$'])
+  },
   data () {
     return {
       topBg: {
         backgroundImage: 'url(' + require('@/assets/history/rbanner.png') + ')'
       },
       isMoreLoading: false,
-      pullupConfig2: {
+      pullupConfig: {
         content: '上拉加载更多',
         downContent: '松开进行加载',
         upContent: '上拉加载更多',
         loadingContent: '加载中...'
       },
-      object: {
-        firstName: 'John',
-        lastName: 'Doe',
-        age: 30
+      listDataOpt: {
+        data: [],
+        size: 20,
+        index: 1,
+        totalPage: 0
       }
     }
   },
   methods: {
-    load2 () {
-      setTimeout(() => {
-        this.n2 += 10
-        setTimeout(() => {
-          this.$refs.demo2.donePullup()
-        }, 100)
-        if (this.n2 === 30) { // unload plugin
-          setTimeout(() => {
-            this.$refs.demo2.disablePullup()
-          }, 100)
+    async getListData () {
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'get_readbook_list',
+          student_id: this.userInfo$$.studentId,
+          page_size: this.listDataOpt.size,
+          page_index: this.listDataOpt.index
+        },
+        tag: 'get_readbook_list'
+      })
+      if (result.response_status === 1) {
+        this.listDataOpt.index = result.page_index
+        if (this.listDataOpt.index === 1) {
+          this.listDataOpt.totalPage = result.pages
         }
-      }, 2000)
+        this.listDataOpt.data = result.ReadBook_List
+      }
+      if (this.listDataOpt.totalPage <= this.listDataOpt.index) {
+        this.$refs.pullup_more.disablePullup()
+      }
+    },
+    loadMore () {
+      if (this.listDataOpt.totalPage > this.listDataOpt.index) {
+        this.listDataOpt.index += 1
+        this.$refs.pullup_more.donePullup()
+        this.getListData()
+      } else {
+        this.$refs.pullup_more.disablePullup()
+      }
     }
+  },
+  created () {
+    this.listDataOpt.data = []
+    this.listDataOpt.totalPage = 0
+    this.listDataOpt.index = 1
+    this.getListData()
   }
 }
 </script>
@@ -115,6 +150,18 @@ export default {
   .readyhistory{
     height: 100%;
     background-color: #FFFFFF;
+  }
+  .readyhistory .pull-scroll{
+    height: 100%;
+    position: relative;
+  }
+  .readyhistory .pull-scroll .pull-scroll-box{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 125px;
   }
   .m-img {
     padding-bottom: 33%;

@@ -1,27 +1,31 @@
 <template>
-  <div class="check-flow">
-    <div style="position: relative;height: 100%;">
-      <div class="check-btn-img">
-        <img :src='topBg' />
-        <div class="m-title">已选书籍</div>
-      </div>
-      <div style="width: 85%;margin: 30px auto 0;">
-        <div style="margin-bottom: 20px;text-indent: 20px;">1.您的成绩为80分，答对题目80个，答错题目20个，成绩优异。希望您继续努力</div>
-        <div style="margin-bottom: 20px;">
-          <group class="group-radio">
-            <radio :selected-label-style="{color: '#09BB07'}" :options="listData" @on-change="change"></radio>
-          </group>
+  <div>
+    <div class="check-flow">
+      <div style="position: relative;height: 100%;">
+        <div class="check-btn-img">
+          <img :src='topBg' />
+          <div class="m-title">书籍测试</div>
         </div>
-        <flexbox class="flex-div">
-          <flexbox-item>
-            <div class="look-err">上一题</div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="rest-check">下一题</div>
-          </flexbox-item>
-        </flexbox>
+        <div style="width: 85%;margin: 30px auto 0;">
+          <template>
+            <div style="margin-bottom: 20px;text-indent: 20px;">{{ currentData.name }}</div>
+            <div style="margin-bottom: 20px;">
+              <group class="group-radio">
+                <radio :selected-label-style="{color: '#09BB07'}" :options="currentData.choose" @on-change="change"></radio>
+              </group>
+            </div>
+            <flexbox class="flex-div">
+              <flexbox-item>
+                <div class="look-err" @click="onPrevClick">上一题</div>
+              </flexbox-item>
+              <flexbox-item>
+                <div class="rest-check" @click="onNextClick">下一题</div>
+              </flexbox-item>
+            </flexbox>
+          </template>
+        </div>
+        <div style="position: absolute;bottom:10px;" class="check-btn" @click="sumbitLast" v-show="isLast">确认提交</div>
       </div>
-      <div style="position: absolute;bottom:10px;" class="check-btn">确认提交</div>
     </div>
   </div>
 </template>
@@ -36,27 +40,93 @@ export default {
   },
   data () {
     return {
+      currIndex: 0,
       topBg: require('@/assets/checkout/flbanner.png'),
       chooseValue: '',
-      listData: [{
-        key: '001',
-        value: 'radio001'
-      }, {
-        key: '002',
-        value: 'radio002'
-      }, {
-        key: '003',
-        value: 'radio002'
-      }, {
-        key: '004',
-        value: 'radio002'
-      }]
+      isSum: true,
+      avgScore: 0,
+      total: 0,
+      listData: [],
+      isLast: false,
+      currentData: {
+        name: '',
+        choose: []
+      }
     }
   },
   methods: {
+    async getQuestionList () {
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'get_test_question_list',
+          book_id: 3
+        },
+        tag: 'get_test_question_list'
+      })
+      if (result.response_status === 1) {
+        result.Question_List.forEach((element, index) => {
+          let temData = {}
+          temData.name = (index + 1) + '. ' + element.QuestionTitle
+          temData.choose = []
+          if (element.QuestionA !== '') {
+            temData.choose.push({key: 'A', value: 'A. ' + element.QuestionA})
+          }
+          if (element.QuestionB !== '') {
+            temData.choose.push({key: 'B', value: 'B. ' + element.QuestionB})
+          }
+          if (element.QuestionC !== '') {
+            temData.choose.push({key: 'C', value: 'C. ' + element.QuestionC})
+          }
+          if (element.QuestionD !== '') {
+            temData.choose.push({key: 'D', value: 'D. ' + element.QuestionD})
+          }
+          temData.answer = element.Answer
+          this.listData.push(temData)
+        })
+        this.currentData = this.listData[0]
+        this.isLast = (this.listData.length === 1)
+        this.avgScore = 100 / this.listData.length
+      }
+    },
     change (value, label) {
-      console.log('change:', value, label)
+      this.chooseValue = value
+    },
+    onPrevClick () {
+      if (this.currentData.answer === this.chooseValue && this.isSum) {
+        this.total = this.total - this.avgScore
+        this.isSum = false
+      }
+      if (this.currIndex === 0) {
+        this.$vux.toast.text('这是第一题', 'middle')
+      } else {
+        this.currIndex = this.currIndex - 1
+        this.getQution()
+        this.isSum = true
+      }
+    },
+    onNextClick () {
+      if (this.currentData.answer === this.chooseValue && this.isSum) {
+        this.total = this.total + this.avgScore
+        this.isSum = false
+      }
+      if (this.currIndex === 0) {
+        this.$vux.toast.text('当前是最后一题，请提交', 'middle')
+      } else {
+        this.currIndex = this.currIndex + 1
+        this.getQution()
+        this.isSum = true
+      }
+    },
+    getQution () {
+      this.currentData = this.listData[this.currIndex]
+    },
+    sumbitLast () {
+      console.log(this.total)
     }
+  },
+  created () {
+    this.getQuestionList()
   }
 }
 </script>

@@ -1,30 +1,32 @@
 <template>
-  <div class="check-finish">
-    <div>
-      <masker>
-        <div class="m-img" :style="topBg"></div>
-        <div slot="content" class="m-content">
-          <div class="m-title">测试完成</div>
-          <div class="m-ring">
-            <div class="ring-content">
-              <div class="txt-1">800</div>
-              <div class="txt-2">PERFORMANCE</div>
+  <div>
+    <div class="check-finish">
+      <div>
+        <masker>
+          <div class="m-img" :style="topBg"></div>
+          <div slot="content" class="m-content">
+            <div class="m-title">测试完成</div>
+            <div class="m-ring">
+              <div class="ring-content">
+                <div class="txt-1">800</div>
+                <div class="txt-2">PERFORMANCE</div>
+              </div>
             </div>
           </div>
+        </masker>
+      </div>
+      <div style="margin-top:50px">
+        <div style="font-size: 18px;padding: 0px 10%;">您的成绩为80分，答对题目80个，答错题目20个，成绩优异。希望您继续努力!</div>
+        <div style="padding: 30px 5%;">
+          <flexbox class="flex-div">
+            <flexbox-item>
+              <div class="look-err">查看错题</div>
+            </flexbox-item>
+            <flexbox-item>
+              <div class="rest-check">再测一次</div>
+            </flexbox-item>
+          </flexbox>
         </div>
-      </masker>
-    </div>
-    <div style="margin-top:50px">
-      <div style="font-size: 18px;padding: 0px 10%;">您的成绩为80分，答对题目80个，答错题目20个，成绩优异。希望您继续努力!</div>
-      <div style="padding: 30px 5%;">
-        <flexbox class="flex-div">
-          <flexbox-item>
-            <div class="look-err">查看错题</div>
-          </flexbox-item>
-          <flexbox-item>
-            <div class="rest-check">再测一次</div>
-          </flexbox-item>
-        </flexbox>
       </div>
     </div>
   </div>

@@ -11,24 +11,27 @@
     :placement="showPlacementValue"
     :drawer-style="{'background-color':'#35495e', width: '200px'}">
 
-      <!-- main content -->
+      <div slot="drawer">菜单</div>
+
       <view-box ref="viewBox" body-padding-top="46px" :body-padding-bottom="route.path === '/login' ? '0' : '55px'">
 
-        <!-- header -->
-        <x-header class="lynn-header" slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;" :transition="headerTransition" :left-options="leftOptions">
+        <x-header  class="lynn-header" slot="header"
+        style="width:100%;position:absolute;left:0;top:0;z-index:100;"
+        :left-options="leftOptions"
+        :title="title"
+        :transition="headerTransition"
+        @on-click-more="onClickMore">
           <span class="color_1">乐</span><span class="color_2">在</span><span class="color_4">读</span>
-          <x-icon slot="right" type="navicon" size="35" style="fill:#F83E91;position:relative;top:-8px;left:-3px;"></x-icon>
+          <x-icon slot="right" type="navicon" size="35" style="fill:#F83E91;position:relative;top:-8px;left:-3px;" @click="drawerVisibility = !drawerVisibility"></x-icon>
         </x-header>
 
-        <!-- vuew -->
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
           <router-view class="router-view"></router-view>
         </transition>
 
-        <!-- tabbar -->
-        <tabbar slot="bottom" class="lynn-tabbar" v-show="route.path !== '/login'">
+        <tabbar slot="bottom" class="vux-demo-tabbar" v-show="route.path !== '/login'">
           <tabbar-item :selected="route.path === '/'" :link="{path:'/'}">
             <img slot="icon" src="./assets/tabbar/icon_home.png">
             <img slot="icon-active" src="./assets/tabbar/icon_home_red.png">
@@ -52,8 +55,7 @@
 
 <script>
 import { Drawer, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
-import { mapState, mapActions } from 'vuex'
-
+import { mapState } from 'vuex'
 export default {
   directives: {
     TransferDom
@@ -67,23 +69,18 @@ export default {
     Loading
   },
   methods: {
-    ...mapActions([
-    ])
+    onClickMore () {
+      this.showMenu = true
+    }
   },
   mounted () {
-  },
-  beforeDestroy () {
-  },
-  watch: {
-    path (path) {
-    }
   },
   computed: {
     ...mapState({
       route: state => state.route,
       path: state => state.route.path,
+      deviceready: state => state.app.deviceready,
       isLoading: state => state.isLoading,
-      ajaxShow: state => state.ajaxShow,
       direction: state => state.direction
     }),
     leftOptions () {
@@ -102,11 +99,7 @@ export default {
       }
     },
     title () {
-      // 处理顶部title
-      // if (this.route.path === '/') return 'Home'
-      // if (this.route.path === '/project/donate') return 'Donate'
-      // if (this.route.path === '/demo') return 'Demo list'
-      // return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
+      return this.componentName ? '' : ''
     },
     viewTransition () {
       if (!this.direction) return ''
@@ -115,7 +108,9 @@ export default {
   },
   data () {
     return {
+      showMenu: false,
       drawerVisibility: false,
+      showMode: 'push',
       showModeValue: 'push',
       showPlacement: 'left',
       showPlacementValue: 'left'
@@ -129,32 +124,28 @@ export default {
 @import '~vux/src/styles/1px.less';
 @import '~vux/src/styles/tap.less';
 body {
-  background-color: #E8E8E8;
+  background-color:#E8E8E8;
 }
 html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
 }
-
-.lynn-icon-22 {
-  font-family: 'lynn';
+.demo-icon-22 {
+  font-family: 'vux-demo';
   font-size: 22px;
   color: #888;
 }
-.lynn-tabbar.weui-tabbar{
-  background-color: #FFFFFF;
-}
-.lynn-tabbar .weui-bar__item_on .lynn-icon-22 {
+.vux-demo-tabbar .weui-bar__item_on .demo-icon-22 {
   color: #F70968;
 }
-.lynn-tabbar .weui-tabbar_item.weui-bar__item_on .lynn-tabbar-icon-home {
+.vux-demo-tabbar .weui-tabbar_item.weui-bar__item_on .vux-demo-tabbar-icon-home {
   color: rgb(53, 73, 94);
 }
-.lynn-icon-22:before {
+.demo-icon-22:before {
   content: attr(icon);
 }
-.lynn-tabbar-component {
+.vux-demo-tabbar-component {
   background-color: #F70968;
   color: #fff;
   border-radius: 7px;
@@ -164,14 +155,13 @@ html, body {
 .weui-tabbar__icon + .weui-tabbar__label {
   margin-top: 0!important;
 }
-.lynn-header-box {
+.vux-demo-header-box {
   z-index: 100;
   position: absolute;
   width: 100%;
   left: 0;
   top: 0;
 }
-
 @font-face {
   font-family: 'lynn-font';
   src: url('./assets/fonts/font.eot');
@@ -180,24 +170,21 @@ html, body {
   url('./assets/fonts/font.ttf') format('truetype'),
   url('./assets/fonts/font.svg#iconfont') format('svg');
 }
-
-.lynn-icon {
-  font-family: 'lynn';
+.demo-icon {
+  font-family: 'vux-demo';
   font-size: 20px;
   color: #04BE02;
 }
-
-.lynn-icon-big {
+.demo-icon-big {
   font-size: 28px;
 }
-
-.lynn-icon:before {
+.demo-icon:before {
   content: attr(icon);
 }
-
 .router-view {
   width: 100%;
   height: 100%;
+  top: 46px;
 }
 .vux-pop-out-enter-active,
 .vux-pop-out-leave-active,

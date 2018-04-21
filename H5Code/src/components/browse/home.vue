@@ -1,37 +1,39 @@
 <template>
-  <div class="browse">
-    <swiper :list="listData" auto height="180px" dots-position="center" ></swiper>
-    <div class="grid">
-      <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/browse/readyrecord">
-          <img slot="icon" src="@/assets/home/icon_start_recorder.png">
-          <span slot="label">开始记录</span>
-        </grid-item>
-        <grid-item link="/browse/history">
-          <img slot="icon" src="@/assets/home/icon_good_books.png">
-          <span slot="label">历史查看</span>
-        </grid-item>
-      </grid>
-      <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/browse/classfellow">
-          <img slot="icon" src="@/assets/home/icon_bound_student.png">
-          <span slot="label">同班同学</span>
-        </grid-item>
-        <grid-item link="/browse/analyse">
-          <img slot="icon" src="@/assets/browse/icon_analyse.png">
-          <span slot="label">阅读分析</span>
-        </grid-item>
-      </grid>
-      <grid :show-lr-borders="false" :show-vertical-dividers="false">
-        <grid-item link="/browse/readyhistory">
-          <img slot="icon" src="@/assets/browse/icon_read_book.png">
-          <span slot="label">已读书籍</span>
-        </grid-item>
-        <grid-item link="/browse/checkout">
-          <img slot="icon" src="@/assets/home/icon_book_test.png">
-          <span slot="label">书籍测试</span>
-        </grid-item>
-      </grid>
+  <div>
+    <div class="browse">
+      <swiper :list="listData" auto height="180px" dots-position="center" ></swiper>
+      <div class="grid">
+        <grid :show-lr-borders="false" :show-vertical-dividers="false">
+          <grid-item @on-item-click="goToHerf('1')">
+            <img slot="icon" src="@/assets/home/icon_start_recorder.png">
+            <span slot="label">开始记录</span>
+          </grid-item>
+          <grid-item @on-item-click="goToHerf('2')">
+            <img slot="icon" src="@/assets/home/icon_good_books.png">
+            <span slot="label">历史查看</span>
+          </grid-item>
+        </grid>
+        <grid :show-lr-borders="false" :show-vertical-dividers="false">
+          <grid-item @on-item-click="goToHerf('3')">
+            <img slot="icon" src="@/assets/home/icon_bound_student.png">
+            <span slot="label">同班同学</span>
+          </grid-item>
+          <grid-item @on-item-click="goToHerf('4')">
+            <img slot="icon" src="@/assets/browse/icon_analyse.png">
+            <span slot="label">阅读分析</span>
+          </grid-item>
+        </grid>
+        <grid :show-lr-borders="false" :show-vertical-dividers="false">
+          <grid-item @on-item-click="goToHerf('5')">
+            <img slot="icon" src="@/assets/browse/icon_read_book.png">
+            <span slot="label">已读书籍</span>
+          </grid-item>
+          <grid-item @on-item-click="goToHerf('6')">
+            <img slot="icon" src="@/assets/home/icon_book_test.png">
+            <span slot="label">书籍测试</span>
+          </grid-item>
+        </grid>
+      </div>
     </div>
   </div>
 </template>
@@ -57,6 +59,33 @@ export default {
         img: 'https://static.vux.li/demo/1.jpg'
       }]
     }
+  },
+  methods: {
+    goToHerf (id) {
+      switch (id) {
+        case '1':
+          this.$router.push({path: '/login', query: {redirect: '/browse/home'}})
+          break
+        case '2':
+          this.$router.push({path: '/browse/history'})
+          break
+        case '3':
+          this.$router.push({path: '/browse/classfellow'})
+          break
+        case '4':
+          this.$router.push({path: '/browse/analyse'})
+          break
+        case '5':
+          this.$router.push({path: '/browse/readyhistory'})
+          break
+        case '6':
+          this.$router.push({path: '/browse/checkout'})
+          break
+        default:
+          this.$vux.toast.text('暂未开放', 'middle')
+          break
+      }
+    }
   }
 }
 </script>
@@ -76,8 +105,9 @@ export default {
   }
 </style>
 <style scoped>
-  .browse .grid{
+  .browse{
     background: #FFFFFF;
+    height: 100%;
   }
   .grid .weui-grids:before,
   .grid .weui-grid:after{

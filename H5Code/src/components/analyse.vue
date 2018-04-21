@@ -1,45 +1,47 @@
 <template>
-  <div class="analyse">
-    <div>
-      <masker>
-        <div class="m-img" :style="topBg"></div>
-        <div slot="content" class="m-title">
-          {{ userInfo.studentName }}
-          <br/>
-          {{ userInfo.className }}
-        </div>
-      </masker>
-    </div>
-    <div class="t-color">
-      <grid>
-        <grid-item label="阅读书籍数量">
-          <div slot="icon" class="t-color1">{{ readBookCount }}</div>
-        </grid-item>
-        <grid-item label="阅读总计页数">
-          <div slot="icon" class="t-color2">{{ sumPage }}</div>
-        </grid-item>
-      </grid>
-      <grid>
-        <grid-item label="阅读时长总计">
-          <div slot="icon" class="t-color3">{{ sumTimeCost }}</div>
-        </grid-item>
-        <grid-item label="阅读总平均分">
-          <div slot="icon" class="t-color4">{{ avgScore }}</div>
-        </grid-item>
-      </grid>
-    </div>
-    <div>
-      <flexbox style="margin: 50px 0;">
-        <flexbox-item class="flex-bottom">
-          <div class="flex-div flex-btn">我要测试</div>
-        </flexbox-item>
-      </flexbox>
+  <div>
+    <div class="analyse">
+      <div>
+        <masker>
+          <div class="m-img" :style="topBg"></div>
+          <div slot="content" class="m-title">
+            {{ userInfo$$.studentName }}
+            <br/>
+            {{ userInfo$$.className }}
+          </div>
+        </masker>
+      </div>
+      <div class="t-color">
+        <grid>
+          <grid-item label="阅读书籍数量">
+            <div slot="icon" class="t-color1">{{ readBookCount }}</div>
+          </grid-item>
+          <grid-item label="阅读总计页数">
+            <div slot="icon" class="t-color2">{{ sumPage }}</div>
+          </grid-item>
+        </grid>
+        <grid>
+          <grid-item label="阅读时长总计">
+            <div slot="icon" class="t-color3">{{ sumTimeCost }}</div>
+          </grid-item>
+          <grid-item label="阅读总平均分">
+            <div slot="icon" class="t-color4">{{ avgScore }}</div>
+          </grid-item>
+        </grid>
+      </div>
+      <div>
+        <flexbox style="margin: 50px 0;">
+          <flexbox-item class="flex-bottom">
+            <div class="flex-div flex-btn" @click="goToCheck">我要测试</div>
+          </flexbox-item>
+        </flexbox>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { Masker, Grid, GridItem, Flexbox, FlexboxItem } from 'vux'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Masker,
@@ -60,9 +62,7 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      userInfo: state => state.userInfo
-    })
+    ...mapGetters(['userInfo$$'])
   },
   methods: {
     async getAnalysis () {
@@ -70,7 +70,7 @@ export default {
         method: 'post',
         data: {
           request_method: 'reading_analysis',
-          student_id: 10 // this.userInfo.studentId
+          student_id: this.userInfo$$.studentId
         },
         tag: 'reading_analysis'
       })
@@ -80,6 +80,9 @@ export default {
         this.avgScore = result.AvgScore === null ? 0 : result.AvgScore
         this.sumPage = result.SumPages === null ? 0 : result.SumPages
       }
+    },
+    goToCheck () {
+      this.$router.push({path: '/browse/checkout'})
     }
   },
   created () {

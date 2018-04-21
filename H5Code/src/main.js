@@ -1,25 +1,35 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+
 import Vue from 'vue'
-import FastClick from 'fastclick'
+
 import App from './App'
-import router from './router'
+
+import Vuex from 'vuex'
+import VueRouter from 'vue-router'
 import HttpPlugin from './plugins/http'
 import { sync } from 'vuex-router-sync'
-import { BusPlugin, ToastPlugin } from 'vux'
+import { BusPlugin, ToastPlugin, AppPlugin } from 'vux'
+import router from './router'
 import store from './vuex/store'
+
+Vue.use(VueRouter)
+Vue.use(Vuex)
 
 require('es6-promise').polyfill()
 
-sync(store, router)
-
-/**
- * AjaxPlugin 插件依赖于 axios
- */
-// Vue.use(AjaxPlugin)
+// plugins
 Vue.use(HttpPlugin)
 Vue.use(BusPlugin)
 Vue.use(ToastPlugin, {position: 'top'})
+
+// test
+if (process.env.platform === 'app') {
+  Vue.use(AppPlugin, store)
+}
+
+const FastClick = require('fastclick')
+FastClick.attach(document.body)
+
+sync(store, router)
 
 const history = window.sessionStorage
 history.clear()
@@ -41,15 +51,11 @@ methods.forEach(key => {
 })
 
 router.beforeEach(function (to, from, next) {
-  store.commit('UPDATE_LOADING', {isLoading: true})
+  store.commit('UPDATE_LOADING_STATUS', {isLoading: true})
   if (to.meta.requireAuth) {
     if (store.getters['userInfo$$'] === null) {
       next({path: '/login', query: {redirect: to.fullPath}})
-    } else {
-      next()
     }
-  } else {
-    next()
   }
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
@@ -82,14 +88,9 @@ router.beforeEach(function (to, from, next) {
 
 router.afterEach(function (to) {
   isPush = false
-  store.commit('UPDATE_LOADING', {isLoading: false})
+  store.commit('UPDATE_LOADING_STATUS', {isLoading: false})
 })
 
-FastClick.attach(document.body)
-
-Vue.config.productionTip = false
-
-/* eslint-disable no-new */
 new Vue({
   store,
   router,

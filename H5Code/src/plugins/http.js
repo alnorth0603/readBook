@@ -15,7 +15,7 @@ export const request = function (method, url, data, tag) {
   }
   const needLoading = tag
   if (needLoading) {
-    this.$store.commit('UPDATE_LOADING', {isLoading: true})
+    this.$store.commit('UPDATE_LOADING_STATUS', {isLoading: true})
   }
   return new Promise((resolve, reject) => {
     axios({
@@ -27,29 +27,21 @@ export const request = function (method, url, data, tag) {
     }).then((response) => {
       let resData = response.data
       if (resData.response_status !== 1) {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: resData.response_msg,
-          position: 'middle'
-        })
+        this.$vux.toast.text(resData.response_msg, 'middle')
       }
       if (needLoading) {
-        this.$store.commit('UPDATE_LOADING', {isLoading: false})
+        this.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false})
       }
       resolve(response.data)
     }, (err) => {
       var self = this
       // 清除loading
       if (needLoading) {
-        self.$store.commit('UPDATE_LOADING', {isLoading: false})
+        self.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false})
       }
       // 超时处理
       if (err.code === 'ECONNABORTED') {
-        self.$vux.toast.show({
-          type: 'warn',
-          text: '请求超时，请稍后再试！',
-          position: 'middle'
-        })
+        this.$vux.toast.text('请求超时，请稍后再试', 'middle')
         return
       }
       switch (err.response && err.response.status) {
