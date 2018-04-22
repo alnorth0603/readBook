@@ -17,7 +17,7 @@
       </div>
       <div style="margin-top:50px">
         <div style="font-size: 18px;padding: 0px 10%;">您的成绩为{{ socre }}分，答对题目{{ total }}个，答错题目{{ questions$$.length - total }}个，成绩优异。希望您继续努力!</div>
-        <div style="padding: 30px 5%;">
+        <div style="padding: 30px 5%;margin-top:50px;margin-bottom:50px;">
           <flexbox class="flex-div">
             <!-- <flexbox-item>
               <div class="look-err">查看错题</div>

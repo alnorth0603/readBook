@@ -11,50 +11,49 @@
           </div>
         </masker>
       </div>
-      <div class="pull-scroll">
-        <div class="pull-scroll-box">
-          <scroller lock-x scrollbar-y use-pullup height="100%" :pullup-config="pullupConfig" ref="pullup_more" @on-pullup-loading="loadMore">
-            <div class="box2">
-              <flexbox orient="vertical" :gutter="0">
-                <template v-for="(item, key, index) in listDataOpt.data">
-                  <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
-                    <div class="flexbox-content">
-                      <div class="flexbox-left">
-                        <img :src='item.BookImg'/>
+      <div>
+        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y use-pullup height="-225" bounce=false :pullup-config="pullupConfig" ref="pullup_more" @on-pullup-loading="loadMore">
+          <div class="box2">
+            <flexbox orient="vertical" :gutter="0">
+              <template v-for="(item, key, index) in listDataOpt.data">
+                <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
+                  <div class="flexbox-content">
+                    <div class="flexbox-left">
+                      <img :src='item.BookImg'/>
+                    </div>
+                    <div class="flexbox-right">
+                      <div class="flexbox-right-top">
+                        <flexbox :gutter="0">
+                          <flexbox-item :span='6'>
+                            <div class="txt-1">{{ item.maxEndingPages }}</div>
+                            <div class="txt-2">总计页数</div>
+                          </flexbox-item>
+                          <flexbox-item :span='6'>
+                            <div class="txt-1">{{ item.avgScore }}</div>
+                            <div class="txt-2">平均阅读得分</div>
+                          </flexbox-item>
+                        </flexbox>
                       </div>
-                      <div class="flexbox-right">
-                        <div class="flexbox-right-top">
-                          <flexbox :gutter="0">
-                            <flexbox-item :span='6'>
-                              <div class="txt-1">{{ item.maxEndingPages }}</div>
-                              <div class="txt-2">总计页数</div>
-                            </flexbox-item>
-                            <flexbox-item :span='6'>
-                              <div class="txt-1">{{ item.avgScore }}</div>
-                              <div class="txt-2">平均阅读得分</div>
-                            </flexbox-item>
-                          </flexbox>
-                        </div>
-                        <div class="flexbox-right-bottom">
-                          <flexbox :gutter="0">
-                            <flexbox-item :span='6'>
-                              <div class="txt-1">{{ item.sumTimeCost }}</div>
-                              <div class="txt-2">总计时长</div>
-                            </flexbox-item>
-                            <flexbox-item :span='6'>
-                              <div class="txt-1">{{ item.quizScore }}</div>
-                              <div class="txt-2">测验得分</div>
-                            </flexbox-item>
-                          </flexbox>
-                        </div>
+                      <div class="flexbox-right-bottom">
+                        <flexbox :gutter="0">
+                          <flexbox-item :span='6'>
+                            <div class="txt-1">{{ item.sumTimeCost }}</div>
+                            <div class="txt-2">总计时长</div>
+                          </flexbox-item>
+                          <flexbox-item :span='6'>
+                            <div class="txt-1">{{ item.quizScore }}</div>
+                            <div class="txt-2">测验得分</div>
+                          </flexbox-item>
+                        </flexbox>
                       </div>
                     </div>
-                  </flexbox-item>
-                </template>
-              </flexbox>
-            </div>
-          </scroller>
-        </div>
+                  </div>
+                </flexbox-item>
+              </template>
+            </flexbox>
+          </div>
+        </scroller>
+        <div v-show="!listDataOpt.data.length" style="text-align: center;font-size: 1.2rem;background-color: #fbf9fe;padding: 50px 0;">无数据</div>
       </div>
     </div>
   </div>
@@ -150,18 +149,6 @@ export default {
   .readyhistory{
     height: 100%;
     background-color: #FFFFFF;
-  }
-  .readyhistory .pull-scroll{
-    height: 100%;
-    position: relative;
-  }
-  .readyhistory .pull-scroll .pull-scroll-box{
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 125px;
   }
   .m-img {
     padding-bottom: 33%;

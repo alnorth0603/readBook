@@ -294,7 +294,7 @@ export default {
     transform: rotate(180deg);
   }
   .readyrecord .flex-div-min .vux-number-round .vux-number-input {
-    background: #ececec;
+    background: #fbf9fe;
     font-size: 1.2rem;
   }
   .readyrecord .flex-div-min .rest-calendar .weui-cell__ft .vux-cell-value{
@@ -321,6 +321,7 @@ export default {
     border: 1px solid #B3E5B6;
     letter-spacing: 8px;
     font-size: 18px;
+    box-sizing: border-box;
   }
   .flex-div{
     font-size:14px;
@@ -363,7 +364,6 @@ export default {
     right: 0;
     left: 0;
     padding-left: 100px;
-    padding-top: 2px;
   }
   .flex-div.flex-div-min .look-err{
     font-size:1.2rem;

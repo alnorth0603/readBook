@@ -11,13 +11,11 @@
           </div>
         </masker>
       </div>
-      <div class="pull-scroll">
-        <!-- <scroller lock-x scrollbar-y use-pullup :pullup-config="pullupConfig2" height="500px" ref="demo2" @on-pullup-loading="load2"> -->
-        <div class="pull-scroll-box">
-        <scroller lock-x height="100%">
+      <div>
+        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y height="-225" bounce=false>
           <div class="box2">
             <flexbox orient="vertical" :gutter="0">
-              <template v-for="(value, key, index) in listData">
+              <template v-for="(value, key, index) in listDataOpt.data">
                 <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
                   <div class="flexbox-content">
                     <div class="flexbox-left">{{ value.Name }}</div>
@@ -49,7 +47,7 @@
             </flexbox>
           </div>
         </scroller>
-        </div>
+        <div v-show="!listDataOpt.data.length" style="text-align: center;font-size: 1.2rem;background-color: #fbf9fe;padding: 50px 0;">无数据</div>
       </div>
     </div>
   </div>
@@ -71,14 +69,9 @@ export default {
       topBg: {
         backgroundImage: 'url(' + require('@/assets/classfellow/banner.png') + ')'
       },
-      isMoreLoading: true,
-      pullupConfig2: {
-        content: '无数据',
-        downContent: '松开进行加载',
-        upContent: '上拉加载更多',
-        loadingContent: '加载中...'
-      },
-      listData: { }
+      listDataOpt: {
+        data: []
+      }
     }
   },
   computed: {
@@ -95,11 +88,8 @@ export default {
         tag: 'get_classmate_read_listlogin'
       })
       if (result.response_status === 1) {
-        this.listData = result.ClassMateRead_List
+        this.listDataOpt.data = result.ClassMateRead_List
       }
-    },
-    load2 () {
-      // this.getClassmate()
     }
   },
   created () {
@@ -123,19 +113,6 @@ export default {
     height: 100%;
     background-color: #FFFFFF;
   }
-  .classfellow .pull-scroll{
-    height: 100%;
-    position: relative;
-  }
-  .classfellow .pull-scroll .pull-scroll-box{
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 125px;
-  }
-  
   .m-img {
     padding-bottom: 33%;
     display: block;

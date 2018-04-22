@@ -72,7 +72,7 @@
             </div>
           </div>
         </div>
-        <div v-show="chooseBook.id !== 0" style="position: absolute;bottom:0;" @click="goToCheck" class="check-btn">开始测试</div>
+        <div v-show="chooseBook.id !== 0" style="margin-top:50px;margin-bottom:50px;" @click="goToCheck" class="check-btn">开始测试</div>
       </div>
     </div>
   </div>
@@ -200,7 +200,8 @@ export default {
     margin: auto;
     border: 1px solid #C16499;
     letter-spacing: 8px;
-    font-size: 20px;
+    font-size: 20px;    
+    box-sizing: border-box;
   }
   .book-name{
     position: absolute;

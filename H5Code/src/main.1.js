@@ -1,13 +1,14 @@
+
 import Vue from 'vue'
 
 import App from './App'
 
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
-import { sync } from 'vuex-router-sync'
-import router from './router'
 import HttpPlugin from './plugins/http'
-import { DatetimePlugin, CloseDialogsPlugin, ConfigPlugin, BusPlugin, DevicePlugin, ToastPlugin, AlertPlugin, ConfirmPlugin, LoadingPlugin, AppPlugin } from 'vux'
+import { sync } from 'vuex-router-sync'
+import { BusPlugin, ToastPlugin, AppPlugin } from 'vux'
+import router from './router'
 import store from './vuex/store'
 
 Vue.use(VueRouter)
@@ -15,20 +16,10 @@ Vue.use(Vuex)
 
 require('es6-promise').polyfill()
 
-// global VUX config
-Vue.use(ConfigPlugin, {
-  $layout: 'VIEW_BOX' // global config for VUX, since v2.5.12
-})
-
 // plugins
-Vue.use(DevicePlugin)
-Vue.use(ToastPlugin)
-Vue.use(AlertPlugin)
-Vue.use(ConfirmPlugin)
-Vue.use(LoadingPlugin)
-Vue.use(BusPlugin)
-Vue.use(DatetimePlugin)
 Vue.use(HttpPlugin)
+Vue.use(BusPlugin)
+Vue.use(ToastPlugin, {position: 'top'})
 
 // test
 if (process.env.platform === 'app') {
@@ -38,11 +29,8 @@ if (process.env.platform === 'app') {
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
 
-Vue.use(CloseDialogsPlugin, router)
-
 sync(store, router)
 
-// simple history management
 const history = window.sessionStorage
 history.clear()
 let historyCount = history.getItem('count') * 1 || 0

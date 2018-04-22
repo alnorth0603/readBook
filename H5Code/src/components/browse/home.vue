@@ -113,10 +113,6 @@ export default {
   }
 </style>
 <style scoped>
-  .browse{
-    background: #FFFFFF;
-    height: 100%;
-  }
   .grid .weui-grids:before,
   .grid .weui-grid:after{
     height: 0;

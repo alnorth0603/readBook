@@ -24,7 +24,8 @@
             </flexbox>
           </template>
         </div>
-        <div style="position: absolute;bottom:10px;" class="check-btn" @click="calculate" v-show="isLast">确认提交</div>
+        <!-- <div style="position: absolute;bottom:10px;" class="check-btn" @click="calculate" v-show="isLast">确认提交</div> -->
+        <div style="margin-top:100px;margin-bottom:50px;position: relative;" class="check-btn" @click="calculate" v-show="isLast">确认提交</div>
       </div>
     </div>
   </div>

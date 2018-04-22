@@ -11,32 +11,27 @@
     :placement="showPlacementValue"
     :drawer-style="{'background-color':'#35495e', width: '200px'}">
 
-      <!-- drawer content -->
-      <div slot="drawer">
-      </div>
+      <div slot="drawer">菜单</div>
 
-      <!-- main content -->
-      <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px">
+      <view-box ref="viewBox" body-padding-top="46px" :body-padding-bottom="route.path === '/login' ? '0' : '55px'">
 
-        <x-header class="lynn-header" slot="header"
-        style="width:100%;position:absolute;left:0;top:0;z-index:100;background-color: #fff;"
+        <x-header  class="lynn-header" slot="header"
+        style="width:100%;position:absolute;left:0;top:0;z-index:100;"
         :left-options="leftOptions"
         :title="title"
-        :transition="headerTransition">
-          <span class="color_1">乐</span><span class="color_2">在</span><span class="color_3">读</span>
-          <x-icon slot="right" type="navicon" size="35" style="fill:#F83E91;position:relative;top:-8px;left:-3px;" @click="drawerVisibility = false"></x-icon>
-          <!-- @click="drawerVisibility = !drawerVisibility" -->
+        :transition="headerTransition"
+        @on-click-more="onClickMore">
+          <span class="color_1">乐</span><span class="color_2">在</span><span class="color_4">读</span>
+          <x-icon slot="right" type="navicon" size="35" style="fill:#F83E91;position:relative;top:-8px;left:-3px;" @click="drawerVisibility = !drawerVisibility"></x-icon>
         </x-header>
 
-        <!-- remember to import BusPlugin in main.js if you use components: x-img and sticky -->
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
           <router-view class="router-view"></router-view>
         </transition>
 
-        <tabbar class="vux-demo-tabbar" icon-class="vux-center" v-show="!isTabbarDemo" slot="bottom">
-
+        <tabbar slot="bottom" class="vux-demo-tabbar" v-show="route.path !== '/login'">
           <tabbar-item :selected="route.path === '/'" :link="{path:'/'}">
             <img slot="icon" src="./assets/tabbar/icon_home.png">
             <img slot="icon-active" src="./assets/tabbar/icon_home_red.png">
@@ -53,41 +48,32 @@
             <span slot="label">设置</span>
           </tabbar-item>
         </tabbar>
-
       </view-box>
     </drawer>
   </div>
 </template>
 
 <script>
-import { Radio, Group, Cell, Badge, Drawer, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
+import { Drawer, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
 import { mapState } from 'vuex'
 export default {
   directives: {
     TransferDom
   },
   components: {
-    Radio,
-    Group,
-    Cell,
-    Badge,
     Drawer,
-    ButtonTab,
-    ButtonTabItem,
     ViewBox,
     XHeader,
     Tabbar,
     TabbarItem,
-    Loading,
-    Actionsheet
+    Loading
   },
   methods: {
-    onShowModeChange (val) {
-      this.drawerVisibility = false
-      setTimeout(one => {
-        this.showModeValue = val
-      }, 400)
+    onClickMore () {
+      this.showMenu = true
     }
+  },
+  mounted () {
   },
   computed: {
     ...mapState({
@@ -112,11 +98,8 @@ export default {
         if (/component/.test(this.route.path) && parts[2]) return parts[2]
       }
     },
-    isTabbarDemo () {
-      return /tabbar/.test(this.route.path)
-    },
     title () {
-      return ''
+      return this.componentName ? '' : ''
     },
     viewTransition () {
       if (!this.direction) return ''
@@ -126,11 +109,6 @@ export default {
   data () {
     return {
       showMenu: false,
-      menus: {
-        'language.noop': '<span class="menu-title">Language</span>',
-        'zh-CN': '中文',
-        'en': 'English'
-      },
       drawerVisibility: false,
       showMode: 'push',
       showModeValue: 'push',
@@ -146,7 +124,7 @@ export default {
 @import '~vux/src/styles/1px.less';
 @import '~vux/src/styles/tap.less';
 body {
-  background-color: #fbf9fe;
+  background-color:#E8E8E8;
 }
 html, body {
   height: 100%;
@@ -185,7 +163,7 @@ html, body {
   top: 0;
 }
 @font-face {
-  font-family: 'vux-demo';
+  font-family: 'lynn-font';
   src: url('./assets/fonts/font.eot');
   src: url('./assets/fonts/font.eot?#iefix') format('embedded-opentype'),
   url('./assets/fonts/font.woff') format('woff'),
@@ -205,6 +183,7 @@ html, body {
 }
 .router-view {
   width: 100%;
+  height: 100%;
   top: 46px;
 }
 .vux-pop-out-enter-active,
@@ -238,14 +217,31 @@ html, body {
 .menu-title {
   color: #888;
 }
+.lynn-header.vux-header{
+  background-color: #FFFFFF;
+}
+.lynn-header.vux-header .vux-header-left .vux-header-back{
+  color: #888;
+}
+.lynn-header.vux-header .vux-header-left .left-arrow:before{
+  border-color: #888;
+}
+.lynn-header .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
+  color: #F83E91;
+}
+.lynn-header .vux-header-title > span{
+  padding: 0 8px;
+}
 .lynn-header span.color_1{
   color: #FFC320;
 }
 .lynn-header span.color_2{
   color: #62BFFC;
-  padding: 0 10px;
 }
 .lynn-header span.color_3{
+  color: #9E5AFF;
+}
+.lynn-header span.color_4{
   color: #F83E91;
 }
 </style>
