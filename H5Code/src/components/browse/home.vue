@@ -39,12 +39,16 @@
 </template>
 <script>
 import { Swiper, SwiperItem, Grid, GridItem } from 'vux'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Grid,
     GridItem,
     Swiper,
     SwiperItem
+  },
+  computed: {
+    ...mapGetters(['userInfo$$'])
   },
   data () {
     return {
@@ -64,7 +68,11 @@ export default {
     goToHerf (id) {
       switch (id) {
         case '1':
-          this.$router.push({path: '/login', query: {redirect: '/browse/home'}})
+          if (this.userInfo$$ === null) {
+            this.$router.push({path: '/login', query: {redirect: '/browse/readyrecord'}})
+          } else {
+            this.$router.push({path: '/browse/readyrecord'})
+          }
           break
         case '2':
           this.$router.push({path: '/browse/history'})

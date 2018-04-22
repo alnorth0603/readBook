@@ -4,7 +4,7 @@ import createLogger from 'vuex/dist/logger'
 import myPlugins from './plugins'
 import {BASE} from './type'
 
-const {UPDATE_USER} = BASE
+const {UPDATE_USER, UPDATE_QUESTIONS} = BASE
 
 Vue.use(Vuex)
 const plugins = [...myPlugins]
@@ -17,6 +17,7 @@ const shouldUseTransition = !/transition=none/.test(location.href)
 
 const state = {
   userInfo: '',
+  questions: '',
   isLoading: false,
   direction: shouldUseTransition ? 'forward' : ''
 }
@@ -25,6 +26,9 @@ export default new Vuex.Store({
   mutations: {
     [UPDATE_USER] (state, payload) {
       state.userInfo = payload
+    },
+    [UPDATE_QUESTIONS] (state, payload) {
+      state.questions = payload
     },
     UPDATE_LOADING_STATUS (state, payload) {
       state.isLoading = payload.isLoading
@@ -39,6 +43,9 @@ export default new Vuex.Store({
   getters: {
     [UPDATE_USER] (state) {
       return state.userInfo || JSON.parse(window.localStorage.getItem(`${UPDATE_USER}`))
+    },
+    [UPDATE_QUESTIONS] (state) {
+      return state.questions || JSON.parse(window.localStorage.getItem(`${UPDATE_QUESTIONS}`))
     }
   },
   strict: debug,

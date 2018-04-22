@@ -8,7 +8,7 @@
             <div class="m-title">测试完成</div>
             <div class="m-ring">
               <div class="ring-content">
-                <div class="txt-1">800</div>
+                <div class="txt-1">{{ socre }}</div>
                 <div class="txt-2">PERFORMANCE</div>
               </div>
             </div>
@@ -16,14 +16,14 @@
         </masker>
       </div>
       <div style="margin-top:50px">
-        <div style="font-size: 18px;padding: 0px 10%;">您的成绩为80分，答对题目80个，答错题目20个，成绩优异。希望您继续努力!</div>
+        <div style="font-size: 18px;padding: 0px 10%;">您的成绩为{{ socre }}分，答对题目{{ total }}个，答错题目{{ questions$$.length - total }}个，成绩优异。希望您继续努力!</div>
         <div style="padding: 30px 5%;">
           <flexbox class="flex-div">
             <flexbox-item>
               <div class="look-err">查看错题</div>
             </flexbox-item>
             <flexbox-item>
-              <div class="rest-check">再测一次</div>
+              <div class="rest-check" @click="restCheck">再测一次</div>
             </flexbox-item>
           </flexbox>
         </div>
@@ -33,18 +33,40 @@
 </template>
 <script>
 import { Flexbox, FlexboxItem, Masker } from 'vux'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Masker,
     Flexbox,
     FlexboxItem
   },
+  computed: {
+    ...mapGetters(['questions$$'])
+  },
   data () {
     return {
       topBg: {
         backgroundImage: 'url(' + require('@/assets/checkout/fbanner.png') + ')'
-      }
+      },
+      socre: 0,
+      total: 0
     }
+  },
+  methods: {
+    initData () {
+      this.questions$$.forEach(element => {
+        if (element.answer === element.myAnswer) {
+          this.total = this.total + 1
+        }
+      })
+      this.socre = (100 * this.total / this.questions$$.length).toFixed(2)
+    },
+    restCheck () {
+      this.$router.push({path: '/browse/checkout'})
+    }
+  },
+  created () {
+    this.initData()
   }
 }
 </script>

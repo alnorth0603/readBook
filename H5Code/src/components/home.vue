@@ -41,16 +41,17 @@
         <flexbox-item>
           <div class="rb-panel">
             <div class="rb-panel__bd">
-              <div v-for='(item,index) in list' class="rb-media-box">
+              <div @click='articleDetail(item)' v-for='(item,index) in articleData' class="rb-media-box">
                 <div class="rb-media-box_appmsg">
                   <div class="rb-media-box__hd">
-                    <img :src="item.src" alt="" class="rb-media-box__thumb">
+                    <img :src="item.ArticleImg" alt="" class="rb-media-box__thumb">
                   </div>
                   <div class="rb-media-box__bd">
-                    <div class="rb-media-box__title">{{ item.title }}</div>
-                    <div class="rb-media-box__time">{{ item.date }}</div>
+                    <div class="rb-media-box__title">{{ item.ArticleTitle }}</div>
+                    <div class="rb-media-box__time">{{ item.CreateDate }}</div>
                     <div class="rb-media-box__desc">
-                      <span>阅读量：{{ item.readCount }}</span><span class="icon-xin">{{ item.xinCount }}</span>
+                      {{ item.ArticleContent }}
+                      <!-- <span>阅读量：{{ item.readCount }}</span><span class="icon-xin">{{ item.xinCount }}</span> -->
                     </div>
                   </div>
                 </div>
@@ -91,9 +92,9 @@ export default {
       switch (id) {
         case '1':
           if (this.userInfo$$ === null) {
-            this.$router.push({path: '/login'})
+            this.$router.push({path: '/login', query: {redirect: '/browse/readyrecord'}})
           } else {
-            this.$router.push({path: '/browse/home'})
+            this.$router.push({path: '/browse/readyrecord'})
           }
           break
         case '3':
@@ -121,51 +122,33 @@ export default {
           this.listData.push(temData)
         })
       }
+    },
+    async getListArticle () {
+      this.listData = []
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'get_article_list'
+        },
+        tag: 'get_article_list'
+      })
+      if (result.response_status === 1) {
+        this.articleData = result.Article_List
+      }
+    },
+    articleDetail (obj) {
+      window.location.href = obj.ArticleUrl
     }
   },
   data () {
     return {
       listData: [ ],
-      list: [{
-        src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-        title: '标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一',
-        readCount: 20,
-        xinCount: 200,
-        url: '/component/cell',
-        date: '2017-12-12'
-      }, {
-        src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-        title: '标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一',
-        readCount: 20,
-        xinCount: 200,
-        url: '/component/cell',
-        date: '2017-12-12'
-      }, {
-        src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-        title: '标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一',
-        readCount: 20,
-        xinCount: 200,
-        url: '/component/cell',
-        date: '2017-12-12'
-      }, {
-        src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-        title: '标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一',
-        readCount: 20,
-        xinCount: 200,
-        url: '/component/cell',
-        date: '2017-12-12'
-      }, {
-        src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-        title: '标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一',
-        readCount: 20,
-        xinCount: 200,
-        url: '/component/cell',
-        date: '2017-12-12'
-      }]
+      articleData: [ ]
     }
   },
   created () {
     this.getListBanner()
+    this.getListArticle()
   }
 }
 </script>

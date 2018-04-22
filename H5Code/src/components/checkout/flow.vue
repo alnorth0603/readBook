@@ -11,26 +11,27 @@
             <div style="margin-bottom: 20px;text-indent: 20px;">{{ currentData.name }}</div>
             <div style="margin-bottom: 20px;">
               <group class="group-radio">
-                <radio :selected-label-style="{color: '#09BB07'}" :options="currentData.choose" @on-change="change"></radio>
+                <radio v-model="chooseValue" :selected-label-style="{color: '#09BB07'}" :options="currentData.choose" @on-change="change"></radio>
               </group>
             </div>
             <flexbox class="flex-div">
               <flexbox-item>
-                <div class="look-err" @click="onPrevClick">上一题</div>
+                <div class="look-err" v-show="!isFrist" @click="onPrevClick">上一题</div>
               </flexbox-item>
               <flexbox-item>
-                <div class="rest-check" @click="onNextClick">下一题</div>
+                <div class="rest-check" v-show="!isLast" @click="onNextClick">下一题</div>
               </flexbox-item>
             </flexbox>
           </template>
         </div>
-        <div style="position: absolute;bottom:10px;" class="check-btn" @click="sumbitLast" v-show="isLast">确认提交</div>
+        <div style="position: absolute;bottom:10px;" class="check-btn" @click="calculate" v-show="isLast">确认提交</div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { Radio, Group, Flexbox, FlexboxItem } from 'vux'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Radio,
@@ -38,16 +39,19 @@ export default {
     Flexbox,
     FlexboxItem
   },
+  computed: {
+    ...mapGetters(['userInfo$$'])
+  },
   data () {
     return {
+      bookId: this.$route.params.id,
       currIndex: 0,
       topBg: require('@/assets/checkout/flbanner.png'),
       chooseValue: '',
-      isSum: true,
-      avgScore: 0,
       total: 0,
       listData: [],
       isLast: false,
+      isFrist: true,
       currentData: {
         name: '',
         choose: []
@@ -69,60 +73,83 @@ export default {
           let temData = {}
           temData.name = (index + 1) + '. ' + element.QuestionTitle
           temData.choose = []
-          if (element.QuestionA !== '') {
+          if (element.QuestionA !== '' && element.QuestionA !== null) {
             temData.choose.push({key: 'A', value: 'A. ' + element.QuestionA})
           }
-          if (element.QuestionB !== '') {
+          if (element.QuestionB !== '' && element.QuestionB !== null) {
             temData.choose.push({key: 'B', value: 'B. ' + element.QuestionB})
           }
-          if (element.QuestionC !== '') {
+          if (element.QuestionC !== '' && element.QuestionC !== null) {
             temData.choose.push({key: 'C', value: 'C. ' + element.QuestionC})
           }
-          if (element.QuestionD !== '') {
+          if (element.QuestionD !== '' && element.QuestionD !== null) {
             temData.choose.push({key: 'D', value: 'D. ' + element.QuestionD})
           }
           temData.answer = element.Answer
+          temData.myAnswer = ''
           this.listData.push(temData)
         })
         this.currentData = this.listData[0]
-        this.isLast = (this.listData.length === 1)
-        this.avgScore = 100 / this.listData.length
+        this.isLast = (this.listData.length === (this.currIndex + 1))
+        this.isFrist = ((this.currIndex + 1) === 1)
       }
     },
     change (value, label) {
+      this.listData[this.currIndex].myAnswer = value
       this.chooseValue = value
     },
     onPrevClick () {
-      if (this.currentData.answer === this.chooseValue && this.isSum) {
-        this.total = this.total - this.avgScore
-        this.isSum = false
+      if (this.chooseValue === '') {
+        this.$vux.toast.text('请选择答案', 'middle')
+        return
       }
-      if (this.currIndex === 0) {
-        this.$vux.toast.text('这是第一题', 'middle')
-      } else {
-        this.currIndex = this.currIndex - 1
-        this.getQution()
-        this.isSum = true
-      }
+      this.currIndex = this.currIndex - 1
+      this.getQution()
+      this.isLast = (this.listData.length === (this.currIndex + 1))
+      this.isFrist = ((this.currIndex + 1) === 1)
     },
     onNextClick () {
-      if (this.currentData.answer === this.chooseValue && this.isSum) {
-        this.total = this.total + this.avgScore
-        this.isSum = false
+      if (this.chooseValue === '') {
+        this.$vux.toast.text('请选择答案', 'middle')
+        return
       }
-      if (this.currIndex === 0) {
-        this.$vux.toast.text('当前是最后一题，请提交', 'middle')
-      } else {
-        this.currIndex = this.currIndex + 1
-        this.getQution()
-        this.isSum = true
-      }
+      this.currIndex = this.currIndex + 1
+      this.getQution()
+      this.isLast = (this.listData.length === (this.currIndex + 1))
+      this.isFrist = ((this.currIndex + 1) === 1)
     },
     getQution () {
+      this.chooseValue = ''
       this.currentData = this.listData[this.currIndex]
     },
-    sumbitLast () {
-      console.log(this.total)
+    calculate () {
+      if (this.chooseValue === '') {
+        this.$vux.toast.text('请选择答案', 'middle')
+        return
+      }
+      this.listData.forEach(element => {
+        if (element.answer === element.myAnswer) {
+          this.total = this.total + 1
+        }
+      })
+      let param = {}
+      let socre = 100 * this.total / this.listData.length
+      param.book_id = this.bookId
+      param.Score = socre.toFixed(2)
+      param.student_id = this.userInfo$$.studentId
+      param.request_method = 'record_score'
+      this.recordScore(param)
+    },
+    async recordScore (param) {
+      let result = await this.request({
+        method: 'post',
+        data: param,
+        tag: param.request_method
+      })
+      if (result.response_status === 1) {
+        this.$store.commit('questions$$', this.listData)
+        this.$router.push({path: '/browse/checkout/finish'})
+      }
     }
   },
   created () {

@@ -10,10 +10,10 @@
           <div class="grid no-border">
             <grid :show-lr-borders="false" :show-vertical-dividers="false">
               <grid-item>
-                <span class="whiter" slot="label">开始记录</span>
+                <span class="whiter" slot="label">微信昵称</span>
               </grid-item>
               <grid-item>
-                <span class="whiter" slot="label">开始记录</span>
+                <span class="whiter" slot="label">当前学生 {{userInfo$$.studentName}}</span>
               </grid-item>
             </grid>
           </div>
@@ -21,19 +21,19 @@
       </div>
       <div class="nav-bottom">
         <group>
-          <cell is-link>
+          <cell is-link @click.native='cellClick(1)'>
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/setting/icon_location.png">
             <span slot="title">所在区域</span>
           </cell>
-          <cell :link="{path:'/login'}">
+          <cell is-link @click.native='cellClick(2)'>
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/setting/icon_people.png">
             <span slot="title">绑定学生</span>
           </cell>
-          <cell is-link>
+          <cell is-link @click.native='cellClick(3)'>
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/setting/icon_edit.png">
             <span slot="title">关于</span>
           </cell>
-          <cell is-link>
+          <cell is-link @click.native='cellClick(4)'>
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/setting/icon_exit.png">
             <span slot="title">退出</span>
           </cell>
@@ -45,12 +45,32 @@
 
 <script>
 import { Grid, GridItem, Group, Cell } from 'vux'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Grid,
     GridItem,
     Group,
     Cell
+  },
+  computed: {
+    ...mapGetters(['userInfo$$'])
+  },
+  methods: {
+    cellClick (id) {
+      switch (id) {
+        case 2:
+          this.$router.push({path: '/login', query: {redirect: '/setting'}})
+          break
+        case 4:
+          this.$store.commit('userInfo$$', [])
+          this.$router.push({path: '/'})
+          break
+        default:
+          this.$vux.toast.text('暂未开放', 'middle')
+          break
+      }
+    }
   }
 }
 </script>
