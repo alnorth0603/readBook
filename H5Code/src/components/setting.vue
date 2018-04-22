@@ -63,7 +63,7 @@ export default {
           this.$router.push({path: '/login', query: {redirect: '/setting'}})
           break
         case 4:
-          this.$store.commit('userInfo$$', [])
+          this.$store.commit('userInfo$$', null)
           this.$router.push({path: '/'})
           break
         default:

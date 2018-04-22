@@ -14,34 +14,79 @@
               </flexbox-item>
               <flexbox-item>
                 <div>
-                  <p style="padding: 10px 0;font-size: 1.3rem;">《巴黎圣母院》</p>
-                  <p style="font-size: 12px;">书名:书名书名</p>
-                  <p style="font-size: 12px;">出版社:出版社出版社出版社</p>
-                  <p style="font-size: 12px;">作者:作者作者</p>
+                  <p v-show="bookInfo.name !== ''" style="padding: 10px 0;font-size: 1.3rem;">《{{ bookInfo.name}}》</p>
+                  <p v-show="bookInfo.publisher !== ''" style="font-size: 12px;">书名:{{ bookInfo.name}}</p>
+                  <p v-show="bookInfo.publisher !== ''" style="font-size: 12px;">出版社:{{ bookInfo.publisher}}</p>
+                  <p v-show="bookInfo.bookAuthor !== ''" style="font-size: 12px;">作者:{{ bookInfo.bookAuthor}}</p>
                 </div>
               </flexbox-item>
             </flexbox>
-            <flexbox class="flex-div">
+            <flexbox style="margin-bottom: 20px;" class="flex-div">
               <flexbox-item>
-                <div>
-                  <div class="flex-div-head">
-                    <cell is-link :border-intent="false" :arrow-direction="bookMore ? 'up' : 'down'" @click.native="bookMore = !bookMore">
-                      <span slot="title" style="font-size: 14px;">
-                        <x-input title="必须输入2333" :is-type="be2333" placeholder="I'm placeholder">
-                          <img slot="label" style="padding-right:10px;display:block;" src="http://dn-placeholder.qbox.me/110x110/FF2D55/000" width="24" height="24">
-                        </x-input>
-                      </span>
-                      <img slot="icon" width="20" style="display:block;margin-right:5px;" :src='iconBook' />
-                    </cell>
-                  </div>
-                  <div class="slide" :class="bookMore?'animate':''">
-                    <cell-form-preview :border-intent="false" :list="bookInfo"></cell-form-preview>
+                <div class="flex-input" style="padding: 0 5%;width: 90%;background: #ffffff;">
+                  <x-input placeholder="读过的书籍" v-model="searchVal">
+                    <img slot="label" width="24" height="24" style="display:block;margin-right:5px;" :src='iconBook' />
+                    <div slot="right-full-height" @click="showContent = !showContent">
+                      <img :class="showContent?'up':''" width="24" height="24" :src='iconBookDown' />
+                    </div>
+                  </x-input>
+                </div>
+                <div class="flex-serch-div">
+                  <div class="slide" :class="showContent?'animate':''">
+                    <div>
+                      <scroller lock-x class="scroller-div">
+                        <template v-if="bookList.length" >
+                          <p v-for="item in searchData" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
+                        </template>
+                        <p v-else style="text-align: center;">无数据</p>
+                      </scroller>
+                    </div>
                   </div>
                 </div>
               </flexbox-item>
             </flexbox>
+            <div>
+              <flexbox class="flex-div flex-div-min">
+                <flexbox-item>
+                  <div class="look-err">开始页码</div>
+                  <div class="rest-check"><x-number v-model='bookData.sPage' width='80px' button-style="round" fillable placeholder="开始页码"></x-number></div>
+                </flexbox-item>
+              </flexbox>
+              <flexbox class="flex-div flex-div-min">
+                <flexbox-item>
+                  <div class="look-err">结束页码</div>
+                  <div class="rest-check"><x-number v-model='bookData.ePage' width='80px' button-style="round" fillable  placeholder="结束页码"></x-number></div>
+                </flexbox-item>
+              </flexbox>
+              <flexbox class="flex-div flex-div-min">
+                <flexbox-item>
+                  <div class="look-err">时长<span>(分钟)</span></div>
+                  <div class="rest-check"><x-number v-model='bookData.tCost' width='80px' button-style="round" fillable  placeholder="时长"></x-number></div>
+                </flexbox-item>
+              </flexbox>
+              <flexbox class="flex-div flex-div-min">
+                <flexbox-item>
+                  <div class="look-err">日期<span>(默认当天)</span></div>
+                  <div class="rest-check">
+                    <calendar class="rest-calendar" v-model='bookData.date' title='' show-popup-header popup-header-title="请选择日期" disable-future></calendar>
+                  </div>
+                </flexbox-item>
+              </flexbox>
+              <flexbox class="flex-div flex-div-min">
+                <flexbox-item>
+                  <div class="look-err">家长评分</div>
+                  <div class="rest-check"><x-input v-model='bookData.score' class="rest-input" placeholder="家长评分"></x-input></div>
+                </flexbox-item>
+              </flexbox>
+              <flexbox class="flex-div flex-div-min">
+                <flexbox-item>
+                  <div class="look-err">家长评语</div>
+                  <div class="rest-check"><x-input v-model='bookData.appraise' class="rest-input" placeholder="家长评语"></x-input></div>
+                </flexbox-item>
+              </flexbox>
+            </div>
           </div>
-          <div style="border-radius: 6px; width:90%;font-size: 15px;height: 35px;line-height: 35px; margin-top:30px;" class="check-btn">提交</div>
+          <div style="border-radius: 6px; width:90%;font-size: 15px;height: 35px;line-height: 35px; margin-top:30px;" class="check-btn" @click="sumbitBook">提交</div>
         </div>
       </div>
     </div>
@@ -49,36 +94,155 @@
 </template>
 
 <script>
-import { Flexbox, FlexboxItem, Cell, CellBox, CellFormPreview } from 'vux'
+import { Flexbox, FlexboxItem, XInput, Cell, Scroller, XNumber, Calendar, dateFormat } from 'vux'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Flexbox,
     FlexboxItem,
-    CellFormPreview,
+    Scroller,
+    XNumber,
     Cell,
-    CellBox
+    XInput,
+    Calendar
+  },
+  computed: {
+    ...mapGetters(['userInfo$$']),
+    searchData () {
+      let search = this.searchVal
+      if (search === '') {
+        this.showContent = false
+      } else {
+        this.showContent = true
+      }
+      this.bookInfo.name = search
+      this.bookInfo.publisher = ''
+      this.bookInfo.bookImg = ''
+      this.bookInfo.bookAuthor = ''
+      if (search) {
+        return this.bookList.filter((item) => {
+          return String(item.BookTitle).toLowerCase().indexOf(search) > -1
+        })
+      }
+      return this.bookList
+    }
   },
   data () {
     return {
-      bookMore: false,
+      bookList: [],
+      searchVal: '',
+      showContent: false,
       iconBook: require('@/assets/readyrecord/icon_record.png'),
-      bookInfo: [{
-        label: '开始页码',
-        value: '10'
-      }, {
-        label: '结束页码',
-        value: '1111'
-      }, {
-        label: '时长<span>(分钟)</span>',
-        value: '8'
-      }, {
-        label: '日期<span>(默认当天)</span>',
-        value: '8'
-      }, {
-        label: '家长评分',
-        value: '8'
-      }]
+      iconBookDown: require('@/assets/readyrecord/cc-down.png'),
+      bookInfo: {
+        name: '',
+        publisher: '',
+        bookImg: '',
+        bookAuthor: ''
+      },
+      bookData: {
+        sPage: 0,
+        epage: 0,
+        tCost: 0,
+        date: 'TODAY',
+        score: 0,
+        appraise: ''
+      }
     }
+  },
+  methods: {
+    onChoose (obj) {
+      this.bookInfo.name = obj.BookTitle
+      this.bookInfo.publisher = obj.Publisher === null ? '' : obj.Publisher
+      this.bookInfo.bookImg = obj.BookImg === null ? '' : obj.BookImg
+      this.bookInfo.bookAuthor = obj.BookAuthor === null ? '' : obj.BookAuthor
+      this.showContent = false
+    },
+    sumbitBook () {
+      if (!/^\d+(\.\d+)?$/.test(this.bookData.score)) {
+        this.$vux.toast.text('家长评分不合法', 'middle')
+        return
+      }
+      if (this.bookData.appraise === '') {
+        this.$vux.toast.text('家长评语不能为空', 'middle')
+        return
+      }
+      let param = {}
+      param.request_method = 'student_recording'
+      param.student_id = this.userInfo$$.studentId
+      param.start_page = this.bookData.sPage
+      param.end_page = this.bookData.epage
+      param.time_cost = this.bookData.tCost
+      param.recording_date = this.bookData.date
+      param.score = this.bookData.score
+      param.appraise = this.bookData.appraise
+      param.book_name = this.bookInfo.name
+      this.postData(param)
+    },
+    async postData (param) {
+      let result = await this.request({
+        method: 'post',
+        data: param,
+        tag: param.request_method
+      })
+      if (result.response_status === 1) {
+        this.$vux.toast.text('记录成功', 'middle')
+        this.clearData()
+      }
+    },
+    async getBookList () {
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'get_book_list',
+          student_id: this.userInfo$$.studentId
+        },
+        tag: 'get_book_list'
+      })
+      if (result.response_status === 1) {
+        this.bookList = result.Book_List
+      }
+    },
+    async setBookInfo () {
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'student_recording',
+          student_id: this.userInfo$$.studentId,
+          start_page: this.bookData.sPage,
+          end_page: this.bookData.epage,
+          time_cost: this.bookData.tCost,
+          recording_date: this.bookData.date,
+          score: this.bookData.score,
+          appraise: this.bookData.appraise
+        },
+        tag: 'student_recording'
+      })
+      if (result.response_status === 1) {
+        this.bookList = result.Book_List
+      }
+    },
+    clearData () {
+      this.searchVal = ''
+      this.bookInfo = {
+        name: '',
+        publisher: '',
+        bookImg: '',
+        bookAuthor: ''
+      }
+      this.bookData = {
+        sPage: 0,
+        epage: 0,
+        tCost: 0,
+        date: dateFormat(new Date(), 'YYYY-MM-DD'),
+        score: 0,
+        appraise: ''
+      }
+      this.getBookList()
+    }
+  },
+  created () {
+    this.getBookList()
   }
 }
 </script>
@@ -113,14 +277,33 @@ export default {
   .readyrecord .flex-div-head .weui-cell_access .weui-cell__ft.vux-cell-arrow-up::after {
     transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0) rotate(-90deg);
   }
-  .readyrecord .flex-div .slide .weui-form-preview__bd,
-  .readyrecord .flex-div .slide .weui-form-preview__label{
-    color:#000000;
-    font-size:.9em;
+
+  .readyrecord .flex-input .weui-cell{
+    padding: 0;
   }
-  .readyrecord .flex-div .slide .weui-form-preview__label>span{
-    color:#999999;
-    font-size:.5em;
+  .readyrecord .scroller-div{
+    max-height: 200px;
+    height: auto !important;
+  }
+  .readyrecord .flex-input .vux-x-input-right-full img{
+    height: 22px;
+    display: block;
+    padding: 11px 0;
+  }
+  .readyrecord .flex-input .vux-x-input-right-full img.up{
+    transform: rotate(180deg);
+  }
+  .readyrecord .flex-div-min .vux-number-round .vux-number-input {
+    background: #ececec;
+    font-size: 1.2rem;
+  }
+  .readyrecord .flex-div-min .rest-calendar .weui-cell__ft .vux-cell-value{
+    height: 20px;
+    font-size: 1.2rem;
+  }
+  .readyrecord .flex-div-min .rest-input .weui-input{
+    height: 20px;
+    font-size: 1rem;
   }
 </style>
 <style scoped>
@@ -139,18 +322,56 @@ export default {
     letter-spacing: 8px;
     font-size: 18px;
   }
-  .flex-div .flex-div-head{
-    background: #FFFFFF;
+  .flex-div{
+    font-size:14px;
+    border-bottom: 1px solid #EEEEEE;
   }
-  .flex-div .slide{
-    padding: 0 35px;
+  .slide {
+    position: absolute;
+    background: #ffffff;
+    width: 100%;
     overflow: hidden;
     max-height: 0;
     transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
+    left: 0;
+    right: 0;
   }
-  .flex-div .animate {
+  .slide>div{
+    padding: 0 20px;
+    box-sizing: border-box;
+    border: 1px solid #C0BFC4;
+  }
+  .animate {
     max-height: 9999px;
     transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
     transition-delay: 0s;
+  }
+  .flex-serch-div{
+    position: relative;
+    z-index: 5;
+  }
+  .flex-div.flex-div-min{
+    width: 80%;
+    margin:auto;
+    border-bottom: 1px solid #EEEEEE;
+    position: relative;
+    height: 48px;
+  }
+  .flex-div.flex-div-min .rest-check{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding-left: 100px;
+    padding-top: 2px;
+  }
+  .flex-div.flex-div-min .look-err{
+    font-size:1.2rem;
+    width: 100px;
+    display: inline-block;
+  }
+  .flex-div.flex-div-min .look-err>span{
+    font-size:.7rem;
+    color: #888;
   }
 </style>

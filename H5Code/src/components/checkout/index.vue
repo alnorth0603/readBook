@@ -15,7 +15,7 @@
             <flexbox class="flex-div">
               <flexbox-item>
                 <div class="flex-input">
-                  <x-input placeholder="读过的书籍">
+                  <x-input placeholder="读过的书籍" v-model="searchVal">
                     <img slot="label" width="24" height="24" style="display:block;margin-right:5px;" :src='iconBook' />
                     <div slot="right-full-height" @click="showContent = !showContent">
                       <img :class="showContent?'up':''" width="24" height="24" :src='iconBookDown' />
@@ -27,7 +27,7 @@
                     <div>
                       <scroller lock-x class="scroller-div">
                         <template v-if="bookList.length" >
-                          <p v-for="item in bookList" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
+                          <p v-for="item in searchData" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
                         </template>
                         <p v-else style="text-align: center;">无数据</p>
                       </scroller>
@@ -102,11 +102,26 @@ export default {
         generalCount: 0,
         easyCount: 0
       },
-      bookList: []
+      bookList: [],
+      searchVal: ''
     }
   },
   computed: {
-    ...mapGetters(['userInfo$$'])
+    ...mapGetters(['userInfo$$']),
+    searchData () {
+      let search = this.searchVal
+      if (search === '') {
+        this.showContent = false
+      } else {
+        this.showContent = true
+      }
+      if (search) {
+        return this.bookList.filter((item) => {
+          return String(item.BookTitle).toLowerCase().indexOf(search) > -1
+        })
+      }
+      return this.bookList
+    }
   },
   methods: {
     async getBookList () {
@@ -139,11 +154,13 @@ export default {
       }
     },
     goToCheck () {
-      this.$router.push({path: '/browse/checkout/flow'})
+      this.$router.push({path: '/browse/checkout/flow/' + this.chooseBook.id})
     },
     onChoose (obj) {
+      this.showContent = false
       this.chooseBook.name = obj.BookTitle
       this.chooseBook.id = obj.BookId
+      this.getBookInfo(obj.BookId)
     }
   },
   created () {

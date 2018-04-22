@@ -64,7 +64,7 @@ export default {
         method: 'post',
         data: {
           request_method: 'get_test_question_list',
-          book_id: 3
+          book_id: this.bookId
         },
         tag: 'get_test_question_list'
       })

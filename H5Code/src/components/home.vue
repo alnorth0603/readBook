@@ -98,7 +98,11 @@ export default {
           }
           break
         case '3':
-          this.$router.push({path: '/login'})
+          if (this.userInfo$$ === null) {
+            this.$router.push({path: '/login', query: {redirect: '/browse/checkout'}})
+          } else {
+            this.$router.push({path: '/browse/checkout'})
+          }
           break
         default:
           this.$vux.toast.text('暂未开放', 'middle')

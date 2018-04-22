@@ -5,7 +5,7 @@
         <masker>
           <div class="m-img" :style="topBg"></div>
           <div slot="content" class="m-title">
-            {{ userInfo$$.studentName }}
+            {{ userInfo$$.school }}
             <br/>
             {{ userInfo$$.className }}
           </div>
