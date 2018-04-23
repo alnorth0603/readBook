@@ -49,25 +49,25 @@
               <flexbox class="flex-div flex-div-min">
                 <flexbox-item>
                   <div class="look-err">开始页码</div>
-                  <div class="rest-check"><x-number v-model='bookData.sPage' width='80px' button-style="round" fillable placeholder="开始页码"></x-number></div>
+                  <div class="rest-check"><x-number :min="1" v-model='bookData.sPage' width='80px' button-style="round" fillable placeholder="开始页码"></x-number></div>
                 </flexbox-item>
               </flexbox>
               <flexbox class="flex-div flex-div-min">
                 <flexbox-item>
                   <div class="look-err">结束页码</div>
-                  <div class="rest-check"><x-number v-model='bookData.ePage' width='80px' button-style="round" fillable  placeholder="结束页码"></x-number></div>
+                  <div class="rest-check"><x-number :min="1" v-model='bookData.ePage' width='80px' button-style="round" fillable  placeholder="结束页码"></x-number></div>
                 </flexbox-item>
               </flexbox>
               <flexbox class="flex-div flex-div-min">
                 <flexbox-item>
                   <div class="look-err">时长<span>(分钟)</span></div>
-                  <div class="rest-check"><x-number v-model='bookData.tCost' width='80px' button-style="round" fillable  placeholder="时长"></x-number></div>
+                  <div class="rest-check"><x-number :min="1" v-model='bookData.tCost' width='80px' button-style="round" fillable  placeholder="时长"></x-number></div>
                 </flexbox-item>
               </flexbox>
               <flexbox class="flex-div flex-div-min">
                 <flexbox-item>
                   <div class="look-err">家长评分</div>
-                  <div class="rest-check"><x-number v-model='bookData.score' width='80px' button-style="round" fillable  placeholder="时长"></x-number></div>
+                  <div class="rest-check"><x-number :min="1" v-model='bookData.score' width='80px' button-style="round" fillable  placeholder="时长"></x-number></div>
                 </flexbox-item>
               </flexbox>
               <flexbox class="flex-div flex-div-min">
@@ -87,7 +87,7 @@
               <flexbox class="flex-div flex-div-min textarea">
                 <flexbox-item>
                   <div class="rest-check-textarea">
-                    <x-textarea  :max="200" placeholder="家长评语" :show-counter="false" :height="200" :rows="8" :cols="30"></x-textarea>
+                    <x-textarea :max="200" v-model='bookData.appraise' placeholder="家长评语" :show-counter="false" :height="100" :rows="8" :cols="30"></x-textarea>
                   </div>
                   <!-- <div class="look-err">家长评语</div>
                   <div class="rest-check"><x-input v-model='bookData.appraise' class="rest-input" placeholder="家长评语"></x-input></div> -->
@@ -317,6 +317,10 @@ export default {
   }
   .readyrecord .vux-calendar:before{
      border-top: 0
+  }
+  .readyrecord .weui-textarea{
+    background: #fbf9fe;
+    font-size: 16px;
   }
 </style>
 <style scoped>
