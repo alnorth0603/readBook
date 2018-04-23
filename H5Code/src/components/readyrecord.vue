@@ -87,7 +87,7 @@
               <flexbox class="flex-div flex-div-min textarea">
                 <flexbox-item>
                   <div class="rest-check-textarea">
-                    <x-textarea :max="200" v-model='bookData.appraise' placeholder="家长评语" :show-counter="false" :height="100" :rows="8" :cols="30"></x-textarea>
+                    <x-textarea :max="200" v-model='bookData.appraise' placeholder="阅读心得或家长评语" :show-counter="false" :height="100" :rows="8" :cols="30"></x-textarea>
                   </div>
                   <!-- <div class="look-err">家长评语</div>
                   <div class="rest-check"><x-input v-model='bookData.appraise' class="rest-input" placeholder="家长评语"></x-input></div> -->
@@ -305,22 +305,22 @@ export default {
   }
   .readyrecord .flex-div-min .vux-number-round .vux-number-input {
     background: #fbf9fe;
-    font-size: 1.2rem;
+    font-size: 18px;
   }
   .readyrecord .flex-div-min .rest-calendar .weui-cell__ft .vux-cell-value{
     height: 20px;
-    font-size: 1.2rem;
+    font-size: 18px;
   }
   .readyrecord .flex-div-min .rest-input .weui-input{
     height: 20px;
-    font-size: 1rem;
+    font-size: 18px;
   }
   .readyrecord .vux-calendar:before{
      border-top: 0
   }
   .readyrecord .weui-textarea{
     background: #fbf9fe;
-    font-size: 16px;
+    font-size: 18px;
   }
 </style>
 <style scoped>
