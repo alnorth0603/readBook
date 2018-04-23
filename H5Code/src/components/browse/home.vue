@@ -52,19 +52,29 @@ export default {
   },
   data () {
     return {
-      listData: [{
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/1.jpg'
-      }, {
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/2.jpg'
-      }, {
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/1.jpg'
-      }]
+      listData: []
     }
   },
   methods: {
+    async getListBanner () {
+      this.listData = []
+      let result = await this.request({
+        method: 'post',
+        data: {
+          request_method: 'get_carousel_list',
+          type: 2
+        },
+        tag: 'get_carousel_list'
+      })
+      if (result.response_status === 1) {
+        result.Carousel_List.forEach(element => {
+          let temData = {}
+          temData.url = element.CarouselUrl
+          temData.img = element.CarouselImg
+          this.listData.push(temData)
+        })
+      }
+    },
     goToHerf (id) {
       switch (id) {
         case '1':
@@ -94,6 +104,9 @@ export default {
           break
       }
     }
+  },
+  created () {
+    this.getListBanner()
   }
 }
 </script>
@@ -117,5 +130,8 @@ export default {
   .grid .weui-grid:after{
     height: 0;
     border: 0;
+  }
+  .grid .weui-grid{
+     padding: 5px 10px;
   }
 </style>

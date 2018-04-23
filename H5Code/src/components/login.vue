@@ -31,15 +31,15 @@
             <div class="flex-div  flex-div-picker">
               <label class="flex-label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
               <div class="flex-input">
-                <popup-picker class="s-pop-pick" value-text-align='center' :data="sexData"  :columns="1" show-name v-model="gender" @on-change="onChange" placeholder="请选择">
-                  <span slot="title" class="icon-down"></span>
+                <popup-picker class="s-pop-pick" value-text-align='left' :data="sexData"  :columns="1" show-name v-model="gender" @on-change="onChange" placeholder="请选择">
+                  <!-- <span slot="title" class="icon-down"></span> -->
                 </popup-picker>
               </div>
             </div>
           </flexbox-item>
         </flexbox>
       </div>
-      <flexbox style="margin: 50px 0;">
+      <flexbox style="margin: 20px 0 15px;">
         <flexbox-item class="flex-bottom">
           <div class="flex-div flex-btn" @click="onSumbit">确认提交</div>
         </flexbox-item>
@@ -164,8 +164,8 @@ export default {
   .login .nav-bottom .s-pop-pick .weui-cell_access .weui-cell__ft:after{
     content: none;
   }
-  .login .flex-div .weui-input{
-    text-align: center; 
+  .login .flex-input .weui-input{
+     padding-left: 10px;
   }
 </style>
 <style scoped>

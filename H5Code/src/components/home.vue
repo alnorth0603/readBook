@@ -82,8 +82,9 @@ export default {
     ...mapGetters(['userInfo$$'])
   },
   methods: {
-    onItemClick () {
-      console.log('on item click')
+    onItemClick (item, $event) {
+      console.log(item, $event)
+      // window.location.href = item.ArticleUrl
     },
     onImgError (item, $event) {
       console.log(item, $event)
@@ -114,7 +115,8 @@ export default {
       let result = await this.request({
         method: 'post',
         data: {
-          request_method: 'get_carousel_list'
+          request_method: 'get_carousel_list',
+          type: 1
         },
         tag: 'get_carousel_list'
       })
@@ -170,12 +172,14 @@ export default {
   .home .vux-slider > .vux-indicator > a > .vux-icon-dot.active{
     background-color: #EA2C06;
   }
+  .home .grid .weui-grid{
+    padding: 5px 10px;
+  }
 </style>
 
 <style scoped>
   .grid{
     background-color: #FFFFFF;
-    margin-top: 10px;
   }
   .grid .weui-grids:before,
   .grid .weui-grid:after{
@@ -206,24 +210,31 @@ export default {
     transform: scaleY(0.5);
   }
   .rb-media-box {
-    padding: 10px;
+    padding: 0 10px;
     position: relative;
     margin-top: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  .rb-panel__bd .rb-media-box:last-child{
+    border-bottom: 0;
   }
   .rb-media-box_appmsg {  
     position: relative;
   }
   .rb-media-box_appmsg .rb-media-box__hd {
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
+    width: 85px;
+    height: 65px;
+    line-height: 65px;
     text-align: center;
     display: inline-block;
   }
   .rb-media-box_appmsg .rb-media-box__bd {
     position: absolute;
     top: 0;
-    left: 65px;
+    left: 0;
+    padding-left: 90px;
+    box-sizing: border-box;
+    width: 100%;
   }
   .rb-media-box_appmsg .rb-media-box__thumb {
     width: 100%;
@@ -240,7 +251,7 @@ export default {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     padding-right: 75px;
   }
   .rb-media-box__time{

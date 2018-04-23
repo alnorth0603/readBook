@@ -220,11 +220,11 @@ export default {
     box-sizing: border-box;
   }
   .flexbox-content .flexbox-right .txt-1{
-    font-size:.5rem;
+    font-size:14px;
     text-align: center;
   }
   .flexbox-content .flexbox-right .txt-2{
-    font-size:.5rem;
+    font-size:14px;
     text-align: center;
   }
   .flexbox-content .flexbox-right>div{
@@ -235,7 +235,7 @@ export default {
     box-sizing: content-box;
   }
   .flexbox-content .flexbox-right .txt-3{
-    font-size:.5rem;
+    font-size:12px;
     text-align: center;
     overflow: hidden;
     display: -webkit-box;

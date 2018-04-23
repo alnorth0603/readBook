@@ -66,22 +66,31 @@
               </flexbox>
               <flexbox class="flex-div flex-div-min">
                 <flexbox-item>
+                  <div class="look-err">家长评分</div>
+                  <div class="rest-check"><x-number v-model='bookData.score' width='80px' button-style="round" fillable  placeholder="时长"></x-number></div>
+                </flexbox-item>
+              </flexbox>
+              <flexbox class="flex-div flex-div-min">
+                <flexbox-item>
                   <div class="look-err">日期<span>(默认当天)</span></div>
                   <div class="rest-check">
                     <calendar class="rest-calendar" v-model='bookData.date' title='' show-popup-header popup-header-title="请选择日期" disable-future></calendar>
                   </div>
                 </flexbox-item>
               </flexbox>
-              <flexbox class="flex-div flex-div-min">
+              <!-- <flexbox class="flex-div flex-div-min">
                 <flexbox-item>
                   <div class="look-err">家长评分</div>
                   <div class="rest-check"><x-input v-model='bookData.score' class="rest-input" placeholder="家长评分"></x-input></div>
                 </flexbox-item>
-              </flexbox>
-              <flexbox class="flex-div flex-div-min">
+              </flexbox> -->
+              <flexbox class="flex-div flex-div-min textarea">
                 <flexbox-item>
-                  <div class="look-err">家长评语</div>
-                  <div class="rest-check"><x-input v-model='bookData.appraise' class="rest-input" placeholder="家长评语"></x-input></div>
+                  <div class="rest-check-textarea">
+                    <x-textarea  :max="200" placeholder="家长评语" :show-counter="false" :height="200" :rows="8" :cols="30"></x-textarea>
+                  </div>
+                  <!-- <div class="look-err">家长评语</div>
+                  <div class="rest-check"><x-input v-model='bookData.appraise' class="rest-input" placeholder="家长评语"></x-input></div> -->
                 </flexbox-item>
               </flexbox>
             </div>
@@ -94,7 +103,7 @@
 </template>
 
 <script>
-import { Flexbox, FlexboxItem, XInput, Cell, Scroller, XNumber, Calendar, dateFormat } from 'vux'
+import { Flexbox, FlexboxItem, XInput, Cell, Scroller, XNumber, Calendar, dateFormat, XTextarea } from 'vux'
 import { mapGetters } from 'vuex'
 export default {
   components: {
@@ -104,7 +113,8 @@ export default {
     XNumber,
     Cell,
     XInput,
-    Calendar
+    Calendar,
+    XTextarea
   },
   computed: {
     ...mapGetters(['userInfo$$']),
@@ -141,11 +151,11 @@ export default {
         bookAuthor: ''
       },
       bookData: {
-        sPage: 0,
-        epage: 0,
-        tCost: 0,
+        sPage: 1,
+        ePage: 1,
+        tCost: 30,
         date: 'TODAY',
-        score: 0,
+        score: 60,
         appraise: ''
       }
     }
@@ -171,7 +181,7 @@ export default {
       param.request_method = 'student_recording'
       param.student_id = this.userInfo$$.studentId
       param.start_page = this.bookData.sPage
-      param.end_page = this.bookData.epage
+      param.end_page = this.bookData.ePage
       param.time_cost = this.bookData.tCost
       param.recording_date = this.bookData.date
       param.score = this.bookData.score
@@ -210,7 +220,7 @@ export default {
           request_method: 'student_recording',
           student_id: this.userInfo$$.studentId,
           start_page: this.bookData.sPage,
-          end_page: this.bookData.epage,
+          end_page: this.bookData.ePage,
           time_cost: this.bookData.tCost,
           recording_date: this.bookData.date,
           score: this.bookData.score,
@@ -232,7 +242,7 @@ export default {
       }
       this.bookData = {
         sPage: 0,
-        epage: 0,
+        ePage: 0,
         tCost: 0,
         date: dateFormat(new Date(), 'YYYY-MM-DD'),
         score: 0,
@@ -305,6 +315,9 @@ export default {
     height: 20px;
     font-size: 1rem;
   }
+  .readyrecord .vux-calendar:before{
+     border-top: 0
+  }
 </style>
 <style scoped>
   .readyrecord{
@@ -358,6 +371,9 @@ export default {
     position: relative;
     height: 48px;
   }
+  .flex-div.flex-div-min.textarea{
+    height: auto;
+  }
   .flex-div.flex-div-min .rest-check{
     position: absolute;
     top: 0;
@@ -373,5 +389,11 @@ export default {
   .flex-div.flex-div-min .look-err>span{
     font-size:.7rem;
     color: #888;
+  }
+  .flex-div.flex-div-min .rest-check-textarea .vux-x-textarea{
+    padding: 0;
+  }
+  .flex-div.flex-div-min .rest-check-textarea .weui-textarea{
+     padding: 10px 0;
   }
 </style>

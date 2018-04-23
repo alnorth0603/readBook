@@ -50,7 +50,7 @@
                   <div class="look-err">难&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题</div>
                 </flexbox-item>
                 <flexbox-item>
-                  <div class="rest-check">1{{ chooseBook.problemCount }}</div>
+                  <div class="rest-check">{{ chooseBook.problemCount }}</div>
                 </flexbox-item>
               </flexbox>
               <flexbox class="flex-div flex-div-min">
