@@ -21,10 +21,10 @@
       </div>
       <div class="nav-bottom">
         <group>
-          <cell is-link @click.native='cellClick(1)'>
+          <!-- <cell is-link @click.native='cellClick(1)'>
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/setting/icon_location.png">
             <span slot="title">所在区域</span>
-          </cell>
+          </cell> -->
           <cell is-link @click.native='cellClick(2)'>
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="../assets/setting/icon_people.png">
             <span slot="title">绑定学生</span>

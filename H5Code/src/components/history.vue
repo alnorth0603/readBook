@@ -30,11 +30,11 @@
                           </flexbox-item>
                           <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.StartPages }}</div>
-                            <div class="txt-2">开始页码</div>
+                            <div class="txt-2">开始页</div>
                           </flexbox-item>
                           <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.EndingPages }}</div>
-                            <div class="txt-2">结束页码</div>
+                            <div class="txt-2">结束页</div>
                           </flexbox-item>
                           <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.TimeCost }}</div>
@@ -44,11 +44,11 @@
                       </div>
                       <div class="flexbox-right-bottom">
                         <flexbox :gutter="0">
-                          <flexbox-item :span='4'>
+                          <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.Score }}</div>
                             <div class="txt-2">家长评分</div>
                           </flexbox-item>
-                          <flexbox-item :span='8'>
+                          <flexbox-item :span='9'>
                             <div class="txt-3">{{ item.Appraise }}</div>
                           </flexbox-item>
                         </flexbox>
@@ -202,7 +202,7 @@ export default {
   }
   .flexbox-content .flexbox-left{
     width: 90px;
-    height: 117px;
+    height: 129px;
     display: inline-block;
     text-align: center;
     font-weight: bold;

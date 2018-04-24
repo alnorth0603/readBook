@@ -7,15 +7,15 @@
           <div style="position: relative;">
             <img style="display: block;width: 100%;height: 100%;" :src='topBg' />
             <div class="book-name">
-              <div v-show="chooseBook.id === 0" style="padding: 0 15px 0 95px;">未选书籍</div>
-              <div v-show="chooseBook.id !== 0" style="padding: 0 15px 0 95px;">《{{ chooseBook.name }}》</div>
+              <div v-show="chooseBook.name === ''" style="padding: 0 15px 0 95px;">未选书籍</div>
+              <div v-show="chooseBook.name !== ''" style="padding: 0 15px 0 95px;">《{{ chooseBook.name }}》</div>
             </div>
           </div>
           <div>
             <flexbox class="flex-div">
               <flexbox-item>
                 <div class="flex-input">
-                  <x-input placeholder="读过的书籍" v-model="searchVal">
+                  <x-input readonly placeholder="请选择书籍" v-model="searchVal">
                     <img slot="label" width="24" height="24" style="display:block;margin-right:5px;" :src='iconBook' />
                     <div slot="right-full-height" @click="showContent = !showContent">
                       <img :class="showContent?'up':''" width="24" height="24" :src='iconBookDown' />
@@ -27,7 +27,7 @@
                     <div>
                       <scroller lock-x class="scroller-div">
                         <template v-if="bookList.length" >
-                          <p v-for="item in searchData" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
+                          <p v-for="item in bookList" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
                         </template>
                         <p v-else style="text-align: center;">无数据</p>
                       </scroller>
@@ -36,7 +36,7 @@
                 </div>
               </flexbox-item>
             </flexbox>
-            <div v-show="chooseBook.id !== 0">
+            <div v-show="chooseBook.name !== ''">
               <flexbox class="flex-div flex-div-min">
                 <flexbox-item>
                   <div class="look-err">试题总数</div>
@@ -137,16 +137,22 @@ export default {
         this.bookList = result.Book_List
       }
     },
-    async getBookInfo (id) {
+    async getBookInfo (name) {
       let result = await this.request({
         method: 'post',
         data: {
           request_method: 'get_question_count',
-          book_id: id
+          book_title: name
         },
         tag: 'get_question_count'
       })
       if (result.response_status === 1) {
+        if (result.BookId === '') {
+          this.$vux.toast.text('无题，请联系老师出题', 'middle')
+          this.chooseBook.id = 0
+        } else {
+          this.chooseBook.id = result.BookId
+        }
         this.chooseBook.queCount = result.QueCount === null ? 0 : result.QueCount
         this.chooseBook.problemCount = result.ProblemCount === null ? 0 : result.ProblemCount
         this.chooseBook.generalCount = result.GeneralCount === null ? 0 : result.GeneralCount
@@ -159,8 +165,8 @@ export default {
     onChoose (obj) {
       this.showContent = false
       this.chooseBook.name = obj.BookTitle
-      this.chooseBook.id = obj.BookId
-      this.getBookInfo(obj.BookId)
+      this.searchVal = obj.BookTitle
+      this.getBookInfo(obj.BookTitle)
     }
   },
   created () {

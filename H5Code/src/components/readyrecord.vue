@@ -24,7 +24,7 @@
             <flexbox style="margin-bottom: 20px;" class="flex-div">
               <flexbox-item>
                 <div class="flex-input" style="padding: 0 5%;width: 90%;background: #ffffff;">
-                  <x-input placeholder="读过的书籍" v-model="searchVal">
+                  <x-input placeholder="请输入或选择书籍" @on-change="changeSumbit" v-model="searchVal">
                     <img slot="label" width="24" height="24" style="display:block;margin-right:5px;" :src='iconBook' />
                     <div slot="right-full-height" @click="showContent = !showContent">
                       <img :class="showContent?'up':''" width="24" height="24" :src='iconBookDown' />
@@ -36,7 +36,7 @@
                     <div>
                       <scroller lock-x class="scroller-div">
                         <template v-if="bookList.length" >
-                          <p v-for="item in searchData" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
+                          <p v-for="item in bookList" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
                         </template>
                         <p v-else style="text-align: center;">无数据</p>
                       </scroller>
@@ -105,6 +105,7 @@
 <script>
 import { Flexbox, FlexboxItem, XInput, Cell, Scroller, XNumber, Calendar, dateFormat, XTextarea } from 'vux'
 import { mapGetters } from 'vuex'
+import { setTimeout } from 'timers'
 export default {
   components: {
     Flexbox,
@@ -161,11 +162,18 @@ export default {
     }
   },
   methods: {
+    changeSumbit () {
+      this.bookInfo.name = this.searchVal
+      this.bookInfo.publisher = ''
+      this.bookInfo.bookImg = ''
+      this.bookInfo.bookAuthor = ''
+    },
     onChoose (obj) {
       this.bookInfo.name = obj.BookTitle
       this.bookInfo.publisher = obj.Publisher === null ? '' : obj.Publisher
       this.bookInfo.bookImg = obj.BookImg === null ? '' : obj.BookImg
       this.bookInfo.bookAuthor = obj.BookAuthor === null ? '' : obj.BookAuthor
+      this.searchVal = obj.BookTitle
       this.showContent = false
     },
     sumbitBook () {
@@ -196,8 +204,11 @@ export default {
         tag: param.request_method
       })
       if (result.response_status === 1) {
-        this.$vux.toast.text('记录成功', 'middle')
+        this.$vux.toast.text('提交成功', 'middle')
         this.clearData()
+        setTimeout(() => {
+          this.$router.push({path: '/browse/home'})
+        }, 1000)
       }
     },
     async getBookList () {

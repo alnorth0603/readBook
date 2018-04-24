@@ -100,10 +100,10 @@ export default {
       this.chooseValue = value
     },
     onPrevClick () {
-      if (this.chooseValue === '') {
-        this.$vux.toast.text('请选择答案', 'middle')
-        return
-      }
+      // if (this.chooseValue === '') {
+      //   this.$vux.toast.text('请选择答案', 'middle')
+      //   return
+      // }
       this.currIndex = this.currIndex - 1
       this.getQution()
       this.isLast = (this.listData.length === (this.currIndex + 1))
@@ -149,7 +149,7 @@ export default {
       })
       if (result.response_status === 1) {
         this.$store.commit('questions$$', this.listData)
-        this.$router.push({path: '/browse/checkout/finish'})
+        this.$router.push({path: '/browse/checkout/finish/' + this.bookId})
       }
     }
   },

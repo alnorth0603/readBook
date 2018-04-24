@@ -63,7 +63,7 @@ const router = new VueRouter({
       meta: {requireAuth: true},
       component: resolve => require(['@/components/checkout/flow'], resolve)
     }, {
-      path: '/browse/checkout/finish',
+      path: '/browse/checkout/finish/:id',
       name: 'finish',
       meta: {requireAuth: true},
       component: resolve => require(['@/components/checkout/finish'], resolve)

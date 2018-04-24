@@ -49,6 +49,7 @@
 </template>
 <script>
 import { XInput, PopupPicker, Flexbox, FlexboxItem, Cell } from 'vux'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     XInput,
@@ -56,6 +57,9 @@ export default {
     Flexbox,
     FlexboxItem,
     Cell
+  },
+  computed: {
+    ...mapGetters(['userInfo$$'])
   },
   data () {
     return {
@@ -69,6 +73,12 @@ export default {
   methods: {
     onChange (val) {
       this.gender = val
+    },
+    initData () {
+      this.class_no = this.userInfo$$.classNumber
+      this.student_name = this.userInfo$$.studentName
+      this.student_no = this.userInfo$$.studentNo
+      this.gender = [this.userInfo$$.gender]
     },
     async onSumbit () {
       if (this.class_no === '') {
@@ -92,17 +102,22 @@ export default {
       })
       if (result.response_status === 1) {
         let userInfo = {}
-        userInfo.classNo = this.class_no
         userInfo.className = result.student_class
+        userInfo.classNumber = result.class_no
         userInfo.studentId = result.student_id
-        userInfo.studentName = this.student_name
-        userInfo.studentNo = this.student_no
+        userInfo.studentName = result.student_name
+        userInfo.studentNo = result.student_no
         userInfo.school = result.student_school
-        userInfo.gender = this.gender.length === 0 ? '' : this.gender[0]
+        userInfo.gender = result.student_gender
         this.$store.commit('userInfo$$', userInfo)
         let {redirect = '/'} = this.$route.query
         this.$router.push({path: redirect})
       }
+    }
+  },
+  created () {
+    if (this.userInfo$$ !== null) {
+      this.initData()
     }
   }
 }
@@ -198,7 +213,7 @@ export default {
   }
   .nav-bottom{
     background: #FFFFFF;
-    padding: 70px 30px 0;
+    padding: 50px 30px 0;
   }
   .flex-div{
     position: relative;

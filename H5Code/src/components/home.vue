@@ -123,7 +123,7 @@ export default {
       if (result.response_status === 1) {
         result.Carousel_List.forEach(element => {
           let temData = {}
-          temData.url = 'http://' +  element.CarouselUrl
+          temData.url = element.CarouselUrl
           temData.img = element.CarouselImg
           this.listData.push(temData)
         })
