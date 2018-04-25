@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div style="background: #ffffff;">
     <div class="check-index">
-      <div style="position: relative;height: 100%;">
+      <div style="position: relative;">
         <div class="check-btn">测试书籍</div>
-        <div style="width: 85%;margin: 30px auto 0;">
+        <div style="width: 85%;margin: 10px auto 0;">
           <div style="position: relative;">
             <img style="display: block;width: 100%;height: 100%;" :src='topBg' />
             <div class="book-name">
               <div v-show="chooseBook.name === ''" style="padding: 0 15px 0 95px;">未选书籍</div>
-              <div v-show="chooseBook.name !== ''" style="padding: 0 15px 0 95px;">《{{ chooseBook.name }}》</div>
+              <div v-show="chooseBook.name !== ''" style="padding: 0 15px 0 95px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">《{{ chooseBook.name }}》</div>
             </div>
           </div>
           <div>
@@ -72,7 +72,9 @@
             </div>
           </div>
         </div>
-        <div v-show="chooseBook.id !== 0" style="margin-top:50px;margin-bottom:50px;" @click="goToCheck" class="check-btn">开始测试</div>
+        <div v-show="chooseBook.id !== 0" style="padding:40px 0 50px;">
+          <div @click="goToCheck" class="check-btn">开始测试</div>
+        </div>
       </div>
     </div>
   </div>
@@ -216,9 +218,9 @@ export default {
     left: 0;
     right: 0;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 16px;
     line-height: 1;
-    margin-top: -10px;
+    margin-top: -5px;
   }
   .flex-div{
     font-size:14px;

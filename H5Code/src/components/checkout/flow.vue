@@ -100,10 +100,6 @@ export default {
       this.chooseValue = value
     },
     onPrevClick () {
-      // if (this.chooseValue === '') {
-      //   this.$vux.toast.text('请选择答案', 'middle')
-      //   return
-      // }
       this.currIndex = this.currIndex - 1
       this.getQution()
       this.isLast = (this.listData.length === (this.currIndex + 1))
@@ -120,7 +116,11 @@ export default {
       this.isFrist = ((this.currIndex + 1) === 1)
     },
     getQution () {
-      this.chooseValue = ''
+      if (this.listData[this.currIndex].myAnswer !== '') {
+        this.chooseValue = this.listData[this.currIndex].myAnswer
+      } else {
+        this.chooseValue = ''
+      }
       this.currentData = this.listData[this.currIndex]
     },
     calculate () {

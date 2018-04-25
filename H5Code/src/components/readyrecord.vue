@@ -7,12 +7,12 @@
         <div style="width: 100%;">
           <div>
             <flexbox style="margin: 20px auto;" :gutter="0">
-              <flexbox-item style="text-align: center;">
-                <div style="width: 80px; height:118px;margin: auto;">
+              <flexbox-item style="text-align: center;" :span='4'>
+                <div style="width: 80px; height:120px;margin: auto;">
                   <img style="display: block;height: 100%;width: 100%;" src='../assets/readyrecord/book_bg.png' />
                 </div>
               </flexbox-item>
-              <flexbox-item>
+              <flexbox-item :span='8'>
                 <div>
                   <p v-show="bookInfo.name !== ''" style="padding: 10px 0;font-size: 1.3rem;">《{{ bookInfo.name}}》</p>
                   <p v-show="bookInfo.publisher !== ''" style="font-size: 12px;">书名:{{ bookInfo.name}}</p>
