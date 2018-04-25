@@ -12,7 +12,7 @@
         </masker>
       </div>
       <div>
-        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y height="-225" bounce=false>
+        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y height="-212" :bounce=false>
           <div class="box2">
             <flexbox orient="vertical" :gutter="0">
               <template v-for="(value, key, index) in listDataOpt.data">

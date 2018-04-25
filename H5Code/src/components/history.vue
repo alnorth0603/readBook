@@ -12,14 +12,15 @@
         </masker>
       </div>
       <div>
-        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y use-pullup height="-225" :bounce=false :pullup-config="pullupConfig" ref="demo" @on-pullup-loading="loadMore">
+        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y use-pullup height="-212" ::bounce=false :pullup-config="pullupConfig" ref="demo" @on-pullup-loading="loadMore">
           <div class="box2">
             <flexbox orient="vertical" :gutter="0">
               <template v-for="(item, key, index) in listDataOpt.data">
                 <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
                   <div class="flexbox-content">
                     <div class="flexbox-left">
-                      <img :src='item.BookImg'/>
+                      <img style="width:70px;margin: 13px auto 0;height:103px;" v-if="item.BookImg === null " src="../assets/readyrecord/book_bg.png" />
+                      <img style="width:70px;margin: 13px auto 0;height:103px;" v-else :src='item.BookImg'>
                     </div>
                     <div class="flexbox-right">
                       <div class="flexbox-right-top">
@@ -30,11 +31,11 @@
                           </flexbox-item>
                           <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.StartPages }}</div>
-                            <div class="txt-2">开始页码</div>
+                            <div class="txt-2">开始页</div>
                           </flexbox-item>
                           <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.EndingPages }}</div>
-                            <div class="txt-2">结束页码</div>
+                            <div class="txt-2">结束页</div>
                           </flexbox-item>
                           <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.TimeCost }}</div>
@@ -44,11 +45,11 @@
                       </div>
                       <div class="flexbox-right-bottom">
                         <flexbox :gutter="0">
-                          <flexbox-item :span='4'>
+                          <flexbox-item :span='3'>
                             <div class="txt-1">{{ item.Score }}</div>
                             <div class="txt-2">家长评分</div>
                           </flexbox-item>
-                          <flexbox-item :span='8'>
+                          <flexbox-item :span='9'>
                             <div class="txt-3">{{ item.Appraise }}</div>
                           </flexbox-item>
                         </flexbox>
@@ -202,7 +203,7 @@ export default {
   }
   .flexbox-content .flexbox-left{
     width: 90px;
-    height: 117px;
+    height: 129px;
     display: inline-block;
     text-align: center;
     font-weight: bold;

@@ -12,14 +12,15 @@
         </masker>
       </div>
       <div>
-        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y use-pullup height="-225" bounce=false :pullup-config="pullupConfig" ref="pullup_more" @on-pullup-loading="loadMore">
+        <scroller v-show="listDataOpt.data.length" lock-x scrollbar-y use-pullup height="-212" :bounce=false :pullup-config="pullupConfig" ref="pullup_more" @on-pullup-loading="loadMore">
           <div class="box2">
             <flexbox orient="vertical" :gutter="0">
               <template v-for="(item, key, index) in listDataOpt.data">
                 <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
                   <div class="flexbox-content">
                     <div class="flexbox-left">
-                      <img :src='item.BookImg'/>
+                      <img style="width:60px;height:88px;margin: 6px auto 0px;" v-if="item.BookImg === null " src="../assets/readyrecord/book_bg.png" />
+                      <img style="width:60px;height:88px;margin: 6px auto 0px;" v-else :src='item.BookImg'>
                     </div>
                     <div class="flexbox-right">
                       <div class="flexbox-right-top">
