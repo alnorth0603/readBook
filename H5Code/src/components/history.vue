@@ -19,7 +19,7 @@
                 <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
                   <div class="flexbox-content">
                     <div class="flexbox-left">
-                      <img style="width:70px;margin: 13px auto 0;height:103px;" v-if="item.BookImg === null " src="../assets/readyrecord/book_bg.png" />
+                      <img style="width:70px;margin: 13px auto 0;height:103px;" v-if="item.BookImg === null || item.BookImg === ''" src="../assets/readyrecord/book_bg.png" />
                       <img style="width:70px;margin: 13px auto 0;height:103px;" v-else :src='item.BookImg'>
                     </div>
                     <div class="flexbox-right">
