@@ -9,10 +9,39 @@
     :show.sync="drawerVisibility"
     :show-mode="showModeValue"
     :placement="showPlacementValue"
-    :drawer-style="{'background-color':'#35495e', width: '200px'}">
+    :drawer-style="{'background-color':'#383838', width: '200px'}">
 
       <!-- drawer content -->
-      <div slot="drawer">
+      <div slot="drawer" class="left-drawer">
+        <group style="margin-top:25px;" >
+          <group-title slot="title" style="text-align: center;font-size: 18px;margin-bottom: 20px;">
+            <span class="color_1">乐</span><span class="color_2">在</span><span class="color_3">读</span>
+          </group-title>
+          <cell :link="{path:'/browse/readyrecord'}" @click.native="drawerVisibility = false">
+            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_1.png">
+            <span @click="menuLeftClick(1)" slot="title">开始记录</span>
+          </cell>
+          <cell is-link @click.native="drawerVisibility = false;$vux.toast.text('暂未开放', 'middle')">
+            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_2.png">
+            <span slot="title">好书严选</span>
+          </cell>
+          <cell :link="{path:'/browse/checkout'}" @click.native="drawerVisibility = false">
+            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_3.png">
+            <span slot="title">书籍测试</span>
+          </cell>
+          <cell :link="{path:'/login'}" @click.native="drawerVisibility = false">
+            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_4.png">
+            <span slot="title">绑定学生</span>
+          </cell>
+          <cell is-link @click.native="drawerVisibility = false;$vux.toast.text('暂未开放', 'middle')">
+            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_5.png">
+            <span slot="title">商务合作</span>
+          </cell>
+          <cell is-link @click.native="drawerVisibility = false;$vux.toast.text('暂未开放', 'middle')">
+            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_6.png">
+            <span slot="title">关于我们</span>
+          </cell>
+        </group>
       </div>
 
       <!-- main content -->
@@ -24,8 +53,7 @@
         :title="title"
         :transition="headerTransition">
           <span class="color_1">乐</span><span class="color_2">在</span><span class="color_3">读</span>
-          <x-icon slot="right" type="navicon" size="35" style="fill:#F83E91;position:relative;top:-8px;left:-3px;" @click="drawerVisibility = false"></x-icon>
-          <!-- @click="drawerVisibility = !drawerVisibility" -->
+          <x-icon slot="right" type="navicon" size="35" style="fill:#F83E91;position:relative;top:-8px;left:-3px;" @click="drawerVisibility = !drawerVisibility"></x-icon>
         </x-header>
 
         <!-- remember to import BusPlugin in main.js if you use components: x-img and sticky -->
@@ -60,7 +88,7 @@
 </template>
 
 <script>
-import { Radio, Group, Cell, Badge, Drawer, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
+import { Radio, Group, Cell, Badge, Drawer, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom, GroupTitle } from 'vux'
 import { mapState } from 'vuex'
 export default {
   directives: {
@@ -79,6 +107,7 @@ export default {
     Tabbar,
     TabbarItem,
     Loading,
+    GroupTitle,
     Actionsheet
   },
   methods: {
@@ -132,8 +161,8 @@ export default {
         'en': 'English'
       },
       drawerVisibility: false,
-      showMode: 'push',
-      showModeValue: 'push',
+      // showMode: 'push',
+      showModeValue: 'overlay',
       showPlacement: 'left',
       showPlacementValue: 'left'
     }
@@ -238,14 +267,20 @@ html, body {
 .menu-title {
   color: #888;
 }
+.left-drawer span.color_1,
 .lynn-header span.color_1{
   color: #FFC320;
 }
+.left-drawer span.color_2,
 .lynn-header span.color_2{
   color: #62BFFC;
   padding: 0 10px;
 }
+.left-drawer span.color_3,
 .lynn-header span.color_3{
   color: #F83E91;
+}
+.left-drawer .vux-no-group-title{
+  margin-top: 25px;
 }
 </style>

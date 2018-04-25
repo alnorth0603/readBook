@@ -87,7 +87,7 @@
               <flexbox class="flex-div flex-div-min textarea">
                 <flexbox-item>
                   <div class="rest-check-textarea">
-                    <x-textarea :max="200" v-model='bookData.appraise' placeholder="阅读心得或家长评语" :show-counter="false" :height="100" :rows="8" :cols="30"></x-textarea>
+                    <x-textarea :max="200" v-model='bookData.appraise' placeholder="阅读心得或家长评语" :show-counter="false" :height="100" :rows="3"></x-textarea>
                   </div>
                   <!-- <div class="look-err">家长评语</div>
                   <div class="rest-check"><x-input v-model='bookData.appraise' class="rest-input" placeholder="家长评语"></x-input></div> -->

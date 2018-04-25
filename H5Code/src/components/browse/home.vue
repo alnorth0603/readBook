@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="browse">
-      <swiper :list="listData" auto height="180px" dots-position="center" ></swiper>
+      <swiper :list="listData" auto height="150px" dots-position="center" ></swiper>
       <div class="grid">
         <grid :show-lr-borders="false" :show-vertical-dividers="false">
           <grid-item @on-item-click="goToHerf('1')">
