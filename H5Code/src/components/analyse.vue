@@ -82,7 +82,7 @@ export default {
       }
     },
     goToCheck () {
-      this.$router.push({path: '/browse/checkout'})
+      this.$router.push({path: '/browse/checkout', meta: {requireAuth: true}})
     }
   },
   created () {

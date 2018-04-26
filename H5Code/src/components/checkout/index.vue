@@ -162,7 +162,7 @@ export default {
       }
     },
     goToCheck () {
-      this.$router.push({path: '/browse/checkout/flow/' + this.chooseBook.id})
+      this.$router.push({path: '/browse/checkout/flow/' + this.chooseBook.id, meta: {requireAuth: true}})
     },
     onChoose (obj) {
       this.showContent = false

@@ -149,7 +149,7 @@ export default {
       })
       if (result.response_status === 1) {
         this.$store.commit('questions$$', this.listData)
-        this.$router.push({path: '/browse/checkout/finish/' + this.bookId})
+        this.$router.push({path: '/browse/checkout/finish/' + this.bookId, meta: {requireAuth: true}})
       }
     }
   },

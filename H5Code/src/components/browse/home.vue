@@ -78,26 +78,22 @@ export default {
     goToHerf (id) {
       switch (id) {
         case '1':
-          if (this.userInfo$$ === null) {
-            this.$router.push({path: '/login', query: {redirect: '/browse/readyrecord'}})
-          } else {
-            this.$router.push({path: '/browse/readyrecord'})
-          }
+          this.$router.push({path: '/browse/readyrecord', meta: {requireAuth: true}})
           break
         case '2':
-          this.$router.push({path: '/browse/history'})
+          this.$router.push({path: '/browse/history', meta: {requireAuth: true}})
           break
         case '3':
-          this.$router.push({path: '/browse/classfellow'})
+          this.$router.push({path: '/browse/classfellow', meta: {requireAuth: true}})
           break
         case '4':
-          this.$router.push({path: '/browse/analyse'})
+          this.$router.push({path: '/browse/analyse', meta: {requireAuth: true}})
           break
         case '5':
-          this.$router.push({path: '/browse/readyhistory'})
+          this.$router.push({path: '/browse/readyhistory', meta: {requireAuth: true}})
           break
         case '6':
-          this.$router.push({path: '/browse/checkout'})
+          this.$router.push({path: '/browse/checkout', meta: {requireAuth: true}})
           break
         default:
           this.$vux.toast.text('暂未开放', 'middle')

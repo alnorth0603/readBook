@@ -92,18 +92,10 @@ export default {
     goToHerf (id) {
       switch (id) {
         case '1':
-          if (this.userInfo$$ === null) {
-            this.$router.push({path: '/login', query: {redirect: '/browse/readyrecord'}})
-          } else {
-            this.$router.push({path: '/browse/readyrecord'})
-          }
+          this.$router.push({path: '/browse/readyrecord', meta: {requireAuth: true}})
           break
         case '3':
-          if (this.userInfo$$ === null) {
-            this.$router.push({path: '/login', query: {redirect: '/browse/checkout'}})
-          } else {
-            this.$router.push({path: '/browse/checkout'})
-          }
+          this.$router.push({path: '/browse/checkout', meta: {requireAuth: true}})
           break
         default:
           this.$vux.toast.text('暂未开放', 'middle')
