@@ -17,27 +17,27 @@
           <group-title slot="title" style="text-align: center;font-size: 18px;margin-bottom: 20px;">
             <span class="color_1">乐</span><span class="color_2">在</span><span class="color_3">读</span>
           </group-title>
-          <cell :link="{path:'/browse/readyrecord'}" @click.native="drawerVisibility = false">
-            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_1.png">
+          <cell is-link @click.native="menuLeftClick(1)">
+            <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_2.png">
             <span slot="title">开始记录</span>
           </cell>
-          <cell is-link @click.native="drawerVisibility = false;$vux.toast.text('暂未开放', 'middle')">
+          <cell is-link @click.native="menuLeftClick(2)">
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_2.png">
             <span slot="title">好书严选</span>
           </cell>
-          <cell :link="{path:'/browse/checkout'}" @click.native="drawerVisibility = false">
+          <cell is-link @click.native="menuLeftClick(3)">
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_3.png">
             <span slot="title">书籍测试</span>
           </cell>
-          <cell :link="{path:'/login'}" @click.native="drawerVisibility = false">
+          <cell is-link @click.native="menuLeftClick(4)">
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_4.png">
             <span slot="title">绑定学生</span>
           </cell>
-          <cell is-link @click.native="drawerVisibility = false;$vux.toast.text('暂未开放', 'middle')">
+          <cell is-link @click.native="menuLeftClick(5)">
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_5.png">
             <span slot="title">商务合作</span>
           </cell>
-          <cell is-link @click.native="drawerVisibility = false;$vux.toast.text('暂未开放', 'middle')">
+          <cell is-link @click.native="menuLeftClick(6)">
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_6.png">
             <span slot="title">关于我们</span>
           </cell>
@@ -90,6 +90,7 @@
 <script>
 import { Radio, Group, Cell, Badge, Drawer, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom, GroupTitle } from 'vux'
 import { mapState } from 'vuex'
+import { setTimeout } from 'timers'
 export default {
   directives: {
     TransferDom
@@ -116,6 +117,25 @@ export default {
       setTimeout(one => {
         this.showModeValue = val
       }, 400)
+    },
+    menuLeftClick (id) {
+      this.drawerVisibility = false
+      setTimeout(() => {
+        switch (id) {
+          case 1:
+            this.$router.push({path: '/browse/readyrecord', meta: {requireAuth: true}})
+            break
+          case 3:
+            this.$router.push({path: '/browse/checkout', meta: {requireAuth: true}})
+            break
+          case 4:
+            this.$router.push({path: '/login'})
+            break
+          default:
+            this.$vux.toast.text('暂未开放', 'middle')
+            break
+        }
+      }, 200)
     }
   },
   computed: {
@@ -155,13 +175,8 @@ export default {
   data () {
     return {
       showMenu: false,
-      menus: {
-        'language.noop': '<span class="menu-title">Language</span>',
-        'zh-CN': '中文',
-        'en': 'English'
-      },
       drawerVisibility: false,
-      // showMode: 'push',
+      showMode: 'push',
       showModeValue: 'overlay',
       showPlacement: 'left',
       showPlacementValue: 'left'

@@ -42,6 +42,19 @@ Vue.use(CloseDialogsPlugin, router)
 
 sync(store, router)
 
+router.beforeEach(function (to, from, next) {
+  console.log('1')
+  store.commit('UPDATE_LOADING_STATUS', {isLoading: true})
+  if (to.meta.requireAuth) {
+    if (store.getters['userInfo$$'] === null) {
+      next({path: '/login', query: {redirect: to.fullPath}})
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 // simple history management
 const history = window.sessionStorage
 history.clear()
@@ -63,12 +76,7 @@ methods.forEach(key => {
 })
 
 router.beforeEach(function (to, from, next) {
-  store.commit('UPDATE_LOADING_STATUS', {isLoading: true})
-  if (to.meta.requireAuth) {
-    if (store.getters['userInfo$$'] === null) {
-      next({path: '/login', query: {redirect: to.fullPath}})
-    }
-  }
+  console.log('2')
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
 

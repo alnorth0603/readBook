@@ -63,10 +63,10 @@ export default {
       this.socre = (100 * this.total / this.questions$$.length).toFixed(2)
     },
     restCheckOther () {
-      this.$router.push({path: '/browse/checkout'})
+      this.$router.push({path: '/browse/checkout', meta: {requireAuth: true}})
     },
     restCheck () {
-      this.$router.push({path: '/browse/checkout/flow/' + this.bookId})
+      this.$router.push({path: '/browse/checkout/flow/' + this.bookId, meta: {requireAuth: true}})
     }
   },
   created () {
