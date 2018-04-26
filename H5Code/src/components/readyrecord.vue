@@ -9,22 +9,23 @@
             <flexbox style="margin: 20px auto;" :gutter="0">
               <flexbox-item style="text-align: center;" :span='4'>
                 <div style="width: 80px; height:120px;margin: auto;">
-                  <img style="display: block;height: 100%;width: 100%;" src='../assets/readyrecord/book_bg.png' />
+                  <img style="display: block;height: 100%;width: 100%;" v-if="bookInfo.bookImg === null || bookInfo.bookImg === ''" src="../assets/readyrecord/book_bg.png" />
+                  <img style="display: block;height: 100%;width: 100%;" v-else :src='bookInfo.bookImg'>
                 </div>
               </flexbox-item>
               <flexbox-item :span='8'>
                 <div>
                   <p v-show="bookInfo.name !== ''" style="padding: 10px 0;font-size: 1.3rem;">《{{ bookInfo.name}}》</p>
-                  <p v-show="bookInfo.publisher !== ''" style="font-size: 12px;">书名:{{ bookInfo.name}}</p>
-                  <p v-show="bookInfo.publisher !== ''" style="font-size: 12px;">出版社:{{ bookInfo.publisher}}</p>
-                  <p v-show="bookInfo.bookAuthor !== ''" style="font-size: 12px;">作者:{{ bookInfo.bookAuthor}}</p>
+                  <p v-show="bookInfo.name !== ''" style="font-size: 12px;padding-left: 12px;">书名:{{ bookInfo.name}}</p>
+                  <p v-show="bookInfo.publisher !== ''" style="font-size: 12px;padding-left: 12px;">出版社:{{ bookInfo.publisher}}</p>
+                  <p v-show="bookInfo.bookAuthor !== ''" style="font-size: 12px;padding-left: 12px;">作者:{{ bookInfo.bookAuthor}}</p>
                 </div>
               </flexbox-item>
             </flexbox>
             <flexbox style="margin-bottom: 20px;" class="flex-div">
               <flexbox-item>
                 <div class="flex-input" style="padding: 0 5%;width: 90%;background: #ffffff;">
-                  <x-input placeholder="请输入或选择书籍" @on-change="changeSumbit" v-model="searchVal">
+                  <x-input placeholder="请输入或选择书籍" v-model="searchVal">
                     <img slot="label" width="24" height="24" style="display:block;margin-right:5px;" :src='iconBook' />
                     <div slot="right-full-height" @click="showContent = !showContent">
                       <img :class="showContent?'up':''" width="24" height="24" :src='iconBookDown' />
@@ -34,11 +35,13 @@
                 <div class="flex-serch-div">
                   <div class="slide" :class="showContent?'animate':''">
                     <div>
-                      <scroller lock-x class="scroller-div">
-                        <template v-if="bookList.length" >
-                          <p v-for="item in bookList" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
-                        </template>
-                        <p v-else style="text-align: center;">无数据</p>
+                      <scroller lock-x height="200px">
+                        <div class="box2">
+                          <template v-if="bookList.length" >
+                            <p v-for="item in bookList" style='padding:5px 0;' @click="onChoose(item)">{{ item.BookTitle }}</p>
+                          </template>
+                          <p v-else style="text-align: center;">无数据</p>
+                        </div>
                       </scroller>
                     </div>
                   </div>
@@ -169,14 +172,14 @@ export default {
       this.bookInfo.bookAuthor = ''
     },
     onChoose (obj) {
-      this.bookInfo.name = obj.BookTitle
-      this.bookInfo.publisher = obj.Publisher === null ? '' : obj.Publisher
-      this.bookInfo.bookImg = obj.BookImg === null ? '' : obj.BookImg
-      this.bookInfo.bookAuthor = obj.BookAuthor === null ? '' : obj.BookAuthor
       this.searchVal = obj.BookTitle
       this.showContent = false
     },
     sumbitBook () {
+      if (this.bookInfo.name === '') {
+        this.$vux.toast.text('书名不能为空', 'middle')
+        return
+      }
       if (!/^\d+(\.\d+)?$/.test(this.bookData.score)) {
         this.$vux.toast.text('家长评分不合法', 'middle')
         return
@@ -264,6 +267,27 @@ export default {
   },
   created () {
     this.getBookList()
+  },
+  watch: {
+    searchVal: {
+      handler: function (val, oldval) {
+        let obj = this.bookList.filter((item) => {
+          return String(item.BookTitle).toLowerCase() === val
+        })
+        if (obj.length === 0) {
+          this.bookInfo.name = val
+          this.bookInfo.publisher = ''
+          this.bookInfo.bookImg = ''
+          this.bookInfo.bookAuthor = ''
+        } else {
+          this.bookInfo.name = val
+          this.bookInfo.publisher = obj[0].Publisher === null ? '' : obj[0].Publisher
+          this.bookInfo.bookImg = obj[0].BookImg === null ? '' : obj[0].BookImg
+          this.bookInfo.bookAuthor = obj[0].BookAuthor === null ? '' : obj[0].BookAuthor
+        }
+      },
+      deep: true
+    }
   }
 }
 </script>

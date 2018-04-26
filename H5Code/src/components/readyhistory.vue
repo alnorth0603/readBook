@@ -19,8 +19,8 @@
                 <flexbox-item :class="(index + 1) % 2 == 0 ? 'active': ''">
                   <div class="flexbox-content">
                     <div class="flexbox-left">
-                      <img style="width:60px;height:88px;margin: 6px auto 0px;" v-if="item.BookImg === null || item.BookImg === ''" src="../assets/readyrecord/book_bg.png" />
-                      <img style="width:60px;height:88px;margin: 6px auto 0px;" v-else :src='item.BookImg'>
+                      <img style="width:70px;height:103px;margin: 13px auto 0" v-if="item.BookImg === null || item.BookImg === ''" src="../assets/readyrecord/book_bg.png" />
+                      <img style="width:70px;height:103px;margin: 13px auto 0;" v-else :src='item.BookImg'>
                     </div>
                     <div class="flexbox-right">
                       <div class="flexbox-right-top">
@@ -182,7 +182,7 @@ export default {
   }
   .flexbox-content .flexbox-left{
     width: 90px;
-    height: 100px;
+    height: 129px;
     display: inline-block;
     text-align: center;
     font-weight: bold;
@@ -208,7 +208,7 @@ export default {
     text-align: center;
   }
   .flexbox-content .flexbox-right>div{
-    padding: 3px 0;
+    padding: 10px 0;
   }
   .flexbox-content .flexbox-right .flexbox-right-bottom{
     border-top: 1px solid #E0E0E0;

@@ -19,7 +19,7 @@
           </group-title>
           <cell :link="{path:'/browse/readyrecord'}" @click.native="drawerVisibility = false">
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_1.png">
-            <span @click="menuLeftClick(1)" slot="title">开始记录</span>
+            <span slot="title">开始记录</span>
           </cell>
           <cell is-link @click.native="drawerVisibility = false;$vux.toast.text('暂未开放', 'middle')">
             <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./assets/icon_drawer_2.png">
